@@ -31,18 +31,7 @@ const NavBar = () => {
 						<NavButton disableRipple>
 							Контакты
 						</NavButton>
-						<NavButton disableRipple>
-							Доставка
-						</NavButton>
-						<NavButton disableRipple>
-							Оплата
-						</NavButton>
-						<NavButton disableRipple>
-							Личный кабинет
-						</NavButton>
-						<NavButton disableRipple>
-							Блог
-						</NavButton>
+
 					</Box>
 
 					<Box sx={{flexDirection: 'row', display: 'flex'}}>

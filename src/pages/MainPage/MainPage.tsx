@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import styles from './MainPage.module.css';
 import MainPageBar from "../../components/MainPageBar/MainPageBar";
@@ -10,34 +10,32 @@ import MainCarousel from "../../components/MainCarousel/MainCarousel";
 import ItemsCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import fruit from '../../assets/banana.png';
+import img1 from '../../assets/mainPage/img1.svg'
+import img2 from '../../assets/mainPage/img2.svg'
+import img3 from '../../assets/mainPage/img3.svg'
+import deserts from '../../assets/mainPage/deserts.jpg'
+import fish from '../../assets/mainPage/fish.jpg'
+import meat from '../../assets/mainPage/meat.jpg'
+import banner3 from '../../assets/mainPage/banner3.jpg'
+import banner4 from '../../assets/mainPage/banner4.jpg'
+import info from '../../assets/mainPage/info_2.jpg'
+import brandLogo from '../../assets/mainPage/Component.jpg'
+import YouTubeIcon from '@mui/icons-material/YouTube'
 import ProductCarouselItem from "../../components/ProductCarouselItem/ProductCarouselItem";
+import {DefaultButton} from "../../components/styled/DefaultButton";
+import visa from '../../assets/mainPage/Visa.svg'
+import masterCard from '../../assets/mainPage/masterCard.svg'
+import mir from '../../assets/mainPage/mir.svg'
+import markomLogoBlack from '../../assets/mainPage/markom_logo_bw.svg'
+import SearchIcon from '@mui/icons-material/Search';
+import MainContent from "./MainContent";
+import {Outlet} from 'react-router-dom'
+
+
 
 const MainPage = () => {
 
-	const carouselProducts = [
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
 
-	]
-
-	const responsive = {
-		desktop: {
-			breakpoint: {max: 2000, min: 1024},
-			items: 6,
-		},
-		tablet: {
-			breakpoint: {max: 1024, min: 300},
-			items: 3,
-		},
-	}
 
 
 	return (
@@ -47,17 +45,90 @@ const MainPage = () => {
 			<Box>
 				<MainPageBar/>
 
-				<MainCarousel/>
+				<Outlet/>
 
-				<Typography variant={'h4'} fontWeight={700}>
-					Новое поступление
-				</Typography>
+				<Grid
+					container
+					sx={{
+						width: '100%',
+						padding: 6,
+						bgcolor: theme => theme.palette.primary.bg
+					}}
+				>
+					<Grid item xs={10}
+						  sx={{
+							  justifyContent: 'flex-end',
+							  flexDirection: 'column',
+							  display: 'flex'
+						  }}
+					>
 
-				<ItemsCarousel responsive={responsive}>
-					{carouselProducts.map((item) => (
-						<ProductCarouselItem img={item.img} name={item.name} unitValue={item.unitValue} unit={item.unit} price={item.price} discountPrice={null}/>
-					))}
-				</ItemsCarousel>
+
+						<Box
+							sx={{
+								display: 'inline-flex',
+
+							}}
+						>
+							<img src={markomLogoBlack} alt=""/>
+						</Box>
+
+					</Grid>
+
+					<Grid item xs={2}
+						  sx={{
+							  display: 'flex',
+							  justifyContent: 'space-between',
+							  flexDirection: 'column',
+							  gap: 1
+						  }}
+					>
+
+						<Typography fontWeight={700}>
+							Мы в соц. сетях
+						</Typography>
+
+						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black'}}>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+						</Box>
+
+						<Typography fontWeight={700} variant={'h5'}>
+							+7(800) 800-80-80
+						</Typography>
+						<Typography fontSize={12}>
+							Справочная служба
+						</Typography>
+
+						<Typography fontWeight={700} variant={'h5'}>
+							+7(800) 800-80-80
+						</Typography>
+						<Typography fontSize={12}>
+							Интернет-магазин
+						</Typography>
+
+
+						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black', gap: 2, mt: 2}}>
+
+							<img src={masterCard} alt=""/>
+							<img src={visa} alt=""/>
+							<img src={mir} alt=""/>
+
+
+						</Box>
+					</Grid>
+
+				</Grid>
 
 			</Box>
 		</Box>

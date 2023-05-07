@@ -1,3 +1,31 @@
 .main {
 
 }
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.infoItemHeader p {
+    font-weight: 700;
+    font-size: 20px;
+    margin: 8px;
+}
+
+.infoItemText {
+    font-size: 20px;
+}
+
