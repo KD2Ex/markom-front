@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button, Grid, OutlinedInput, Typography, useTheme} from "@mui/material";
 import BoldH from "../../components/styled/BoldH";
 import ItemsCarousel from "react-multi-carousel";
-import ProductCarouselItem from "../../components/ProductCarouselItem/ProductCarouselItem";
+import ProductCard from "../../components/ProductCarouselItem/ProductCard";
 import fruit from "../../assets/banana.png";
 import {observer} from "mobx-react-lite";
 import cart from '../../store/cart'
 import CartItem from "../../components/CartItem/CartItem";
 import {SearchTextField} from "../../components/styled/SearchTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
+import catalog from "../../store/catalog";
 
 const CartPage = observer(() => {
 
@@ -192,8 +193,8 @@ const CartPage = observer(() => {
 			<Box sx={{mb: 2}}>
 
 				<ItemsCarousel responsive={responsive}>
-					{carouselProducts.map((item, index) => (
-						<ProductCarouselItem id={index} img={item.img} name={item.name} unitValue={item.unitValue} unit={item.unit} price={item.price} discountPrice={null}/>
+					{catalog.products.map((item) => (
+						<ProductCard product={item}/>
 					))}
 				</ItemsCarousel>
 			</Box>

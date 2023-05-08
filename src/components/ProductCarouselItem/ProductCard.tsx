@@ -4,42 +4,36 @@ import fruit from '../../assets/banana.png'
 import {DefaultButton} from "../styled/DefaultButton";
 import {CartButton} from "../styled/CartButton";
 import cart from '../../store/cart'
-import {ICartItem} from "../../models/ICartItem";
+import {IProduct} from "../../models/IProduct";
 import {UnitType} from "../../models/types/UnitType";
 
 interface ProductCarouselItemProps {
-	id: number,
-	img: any,
-	name: string,
-	unitValue: string,
-	unit: UnitType,
-	price: number,
-	discountPrice: number | null,
+	product: IProduct,
 }
 
-const ProductCarouselItem: FC<ProductCarouselItemProps> = ({id, img, name, price, unit, unitValue, discountPrice= null}) => {
+const ProductCard: FC<ProductCarouselItemProps> = ({product}) => {
 
 	const handleClick = () => {
 		cart.addCartItem(
 			{
-				id: id,
-				img: img,
-				price: price,
+				id: product.id,
+				img: product.img,
+				price: product.price,
 				quantity: 1,
-				title: name,
-				unit: unit,
-				weight: unitValue
-			} as ICartItem
+				title: product.title,
+				unit: product.unit,
+				weight: product.weight,
+				category: product.category,
+				discountPrice: null,
+			} as IProduct
 		)
 	}
 
-
-
 	return (
 		<Box sx={{mr: 2, p: 2, border: '1px solid rgba(214,214,214,0.3)', borderRadius: 2}} >
-			<img src={img} alt="" style={{width: '100%'}}/>
-			<p>{`${name}, ${unitValue} ${unit}`}</p>
-			<Typography variant={'h5'} fontWeight={700}>{`${price} ₽`}</Typography>
+			<img src={product.img} alt="" style={{width: '100%'}}/>
+			<p>{`${product.title}, ${product.quantity} ${product.unit}`}</p>
+			<Typography variant={'h5'} fontWeight={700}>{`${product.price} ₽`}</Typography>
 			<CartButton sx={{height: '32px', width: '100%'}} onClick={handleClick} >
 				В корзину
 			</CartButton>
@@ -47,4 +41,4 @@ const ProductCarouselItem: FC<ProductCarouselItemProps> = ({id, img, name, price
 	);
 };
 
-export default ProductCarouselItem;
+export default ProductCard;

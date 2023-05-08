@@ -1,12 +1,15 @@
 import {UnitType} from "./types/UnitType";
+import {ICategory} from "./ICategory";
 
 
-export interface ICartItem {
+export interface IProduct {
 	id: number,
 	title: string,
 	quantity: number,
 	unit: UnitType,
-	weight: string,
+	weight?: number,
 	price: number,
 	img: string,
+	discountPrice?: number | null,
+	category: ICategory,
 }

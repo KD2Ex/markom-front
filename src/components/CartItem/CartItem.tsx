@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Box, ButtonGroup, Grid, IconButton, Typography} from "@mui/material";
-import {ICartItem} from "../../models/ICartItem";
+import {IProduct} from "../../models/IProduct";
 import BoldH from "../styled/BoldH";
 import CloseIcon from '@mui/icons-material/Close';
 import {DefaultButton} from "../styled/DefaultButton";
@@ -8,7 +8,7 @@ import cart from '../../store/cart'
 import {observer} from "mobx-react-lite";
 
 interface CardItemProps {
-	cartItem: ICartItem,
+	cartItem: IProduct,
 	deleteThis: any,
 }
 

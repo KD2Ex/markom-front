@@ -21,7 +21,7 @@ import banner4 from '../../assets/mainPage/banner4.jpg'
 import info from '../../assets/mainPage/info_2.jpg'
 import brandLogo from '../../assets/mainPage/Component.jpg'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import ProductCarouselItem from "../../components/ProductCarouselItem/ProductCarouselItem";
+import ProductCard from "../../components/ProductCarouselItem/ProductCard";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import visa from '../../assets/mainPage/Visa.svg'
 import masterCard from '../../assets/mainPage/masterCard.svg'
@@ -34,8 +34,6 @@ import {Outlet} from 'react-router-dom'
 
 
 const MainPage = () => {
-
-
 
 
 	return (

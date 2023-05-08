@@ -5,18 +5,28 @@ import MainPage from "./pages/MainPage/MainPage";
 import { Routes, Route } from 'react-router-dom';
 import MainContent from "./pages/MainPage/MainContent";
 import CartPage from "./pages/CartPage/CartPage";
+import CatalogPage, {loader as categoryLoader} from "./pages/CatalogPage/CatalogPage";
+import CatalogContent from "./pages/CatalogPage/CatalogContent/CatalogContent";
 
 function App() {
 
 	return (
 			<>
 				<CssBaseline/>
-				<Routes>
-					<Route path={'/'} element={<MainPage/>}>
+				<MainPage/>
+				{/*<Routes>
+					<Route  path={'/'} element={<MainPage/>}>
 						<Route path={'/'} element={<MainContent/>}/>
-						<Route path={'/cart'} element={<CartPage/>}/>
+						<Route path={'cart'} element={<CartPage/>}/>
+						<Route path={'catalog'} element={<CatalogPage/>}
+							loader={categoryLoader}
+						>
+
+							<Route path={':id'} element={<CatalogContent/>}/>
+
+						</Route>
 					</Route>
-				</Routes>
+				</Routes>*/}
 			</>
 
 	)

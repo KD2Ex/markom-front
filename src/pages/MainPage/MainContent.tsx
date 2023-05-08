@@ -2,7 +2,7 @@ import React from 'react';
 import MainCarousel from "../../components/MainCarousel/MainCarousel";
 import {Box, Grid, IconButton, Typography} from "@mui/material";
 import ItemsCarousel from "react-multi-carousel";
-import ProductCarouselItem from "../../components/ProductCarouselItem/ProductCarouselItem";
+import ProductCard from "../../components/ProductCarouselItem/ProductCard";
 import deserts from "../../assets/mainPage/deserts.jpg";
 import fish from "../../assets/mainPage/fish.jpg";
 import banner3 from "../../assets/mainPage/banner3.jpg";
@@ -21,6 +21,7 @@ import masterCard from "../../assets/mainPage/masterCard.svg";
 import visa from "../../assets/mainPage/Visa.svg";
 import mir from "../../assets/mainPage/mir.svg";
 import fruit from "../../assets/banana.png";
+import catalog from "../../store/catalog";
 
 const MainContent = () => {
 
@@ -35,7 +36,6 @@ const MainContent = () => {
 		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
 		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
 		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-
 	]
 
 	const responsive = {
@@ -58,8 +58,8 @@ const MainContent = () => {
 			</Typography>
 
 			<ItemsCarousel responsive={responsive}>
-				{carouselProducts.map((item) => (
-					<ProductCarouselItem img={item.img} name={item.name} unitValue={item.unitValue} unit={item.unit} price={item.price} discountPrice={null}/>
+				{catalog.products.map((item) => (
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
@@ -154,8 +154,8 @@ const MainContent = () => {
 				Вода, соки, напитки
 			</Typography>
 			<ItemsCarousel responsive={responsive}>
-				{carouselProducts.map((item) => (
-					<ProductCarouselItem img={item.img} name={item.name} unitValue={item.unitValue} unit={item.unit} price={item.price} discountPrice={null}/>
+				{catalog.products.map((item) => (
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
@@ -164,8 +164,8 @@ const MainContent = () => {
 				Орехи
 			</Typography>
 			<ItemsCarousel responsive={responsive}>
-				{carouselProducts.map((item) => (
-					<ProductCarouselItem img={item.img} name={item.name} unitValue={item.unitValue} unit={item.unit} price={item.price} discountPrice={null}/>
+				{catalog.products.map((item) => (
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 

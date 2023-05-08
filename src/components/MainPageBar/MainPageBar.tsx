@@ -9,6 +9,8 @@ import banana from '../../assets/banana.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {Link} from "react-router-dom";
+import {observer} from "mobx-react-lite";
+import cart from "../../store/cart";
 
 
 /*const useOutlinedInputStyles=  makeStyles({
@@ -20,7 +22,7 @@ import {Link} from "react-router-dom";
 })*/
 
 
-const MainPageBar = () => {
+const MainPageBar = observer(() => {
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -64,7 +66,7 @@ const MainPageBar = () => {
 						{catalog.map((item, index) => (
 							<Box className={styles.catalogItem}>
 								<img style={{width: '100%', height: '60%'}} src={item.img} alt=""/>
-								<Typography>
+								<Typography component={Link} to={'/catalog/f'}>
 									{item.title}
 								</Typography>
 								{item.subCategories.map(item => (
@@ -103,11 +105,11 @@ const MainPageBar = () => {
 					color: theme => theme.palette.primary.secondary
 				}}
 			>
-				0р.
+				{cart.totalPrice}р.
 			</Typography>
 
 		</Box>
 	);
-};
+});
 
 export default MainPageBar;
