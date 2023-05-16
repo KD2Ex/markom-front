@@ -14,19 +14,6 @@ function App() {
 			<>
 				<CssBaseline/>
 				<MainPage/>
-				{/*<Routes>
-					<Route  path={'/'} element={<MainPage/>}>
-						<Route path={'/'} element={<MainContent/>}/>
-						<Route path={'cart'} element={<CartPage/>}/>
-						<Route path={'catalog'} element={<CatalogPage/>}
-							loader={categoryLoader}
-						>
-
-							<Route path={':id'} element={<CatalogContent/>}/>
-
-						</Route>
-					</Route>
-				</Routes>*/}
 			</>
 
 	)

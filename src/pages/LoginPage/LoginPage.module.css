@@ -1,0 +1,18 @@
+
+
+.columnFlex {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 32px;
+    width: 45%;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+.buttons * {
+    font-size: 20px;
+}

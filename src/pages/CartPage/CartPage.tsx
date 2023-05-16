@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Box, Button, Grid, OutlinedInput, Typography, useTheme} from "@mui/material";
 import BoldH from "../../components/styled/BoldH";
 import ItemsCarousel from "react-multi-carousel";
-import ProductCard from "../../components/ProductCarouselItem/ProductCard";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import fruit from "../../assets/banana.png";
 import {observer} from "mobx-react-lite";
 import cart from '../../store/cart'
@@ -169,7 +169,7 @@ const CartPage = observer(() => {
 							</BoldH>
 
 							<BoldH fontSize={26}>
-								{totalPrice} Р
+								{cart.totalPrice} Р
 							</BoldH>
 
 						</Box>

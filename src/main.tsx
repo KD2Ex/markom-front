@@ -10,6 +10,14 @@ import MainContent from "./pages/MainPage/MainContent";
 import CartPage from "./pages/CartPage/CartPage";
 import CatalogPage, {loader as catalodLoader} from "./pages/CatalogPage/CatalogPage";
 import CatalogContent, {loader as productsLoader} from "./pages/CatalogPage/CatalogContent/CatalogContent";
+import SearchPage, {loader as searchLoader} from "./pages/SearchPage/SearchPage";
+import AboutPage from "./pages/AboutPage/AboutPage";
+import ContactsPage from "./pages/ContactsPage/ContactsPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import OrdersPage from "./pages/OrdersPage/OrdersPage";
+import ProfileDataPage from "./pages/ProfileDataPage/ProfileDataPage";
+import AdressPage from "./pages/AdressPage/AdressPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 
 const router = createBrowserRouter([
@@ -36,6 +44,41 @@ const router = createBrowserRouter([
                         loader: productsLoader
                     }
                 ]
+            },
+            {
+                path: 'search/:searchId',
+                element: <SearchPage/>,
+                loader: searchLoader
+            },
+            {
+                path: 'about',
+                element: <AboutPage/>
+            },
+            {
+                path: 'contacts',
+                element: <ContactsPage/>
+            },
+            {
+                path: 'profile',
+                element: <ProfilePage/>,
+                children: [
+                    {
+                        path: 'orders',
+                        element: <OrdersPage/>
+                    },
+                    {
+                        path: 'data',
+                        element: <ProfileDataPage/>
+                    },
+                    {
+                        path: 'adress',
+                        element: <AdressPage/>
+                    },
+                ]
+            },
+            {
+                path: 'login',
+                element: <LoginPage/>
             },
         ]
     }

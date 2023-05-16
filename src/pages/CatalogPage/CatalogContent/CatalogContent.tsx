@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useLoaderData } from 'react-router-dom';
 import {Grid} from "@mui/material";
-import ProductCard from "../../../components/ProductCarouselItem/ProductCard";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 import catalog from "../../../store/catalog";
 import {IProduct} from "../../../models/IProduct";
 import {Simulate} from "react-dom/test-utils";

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MainCarousel from "../../components/MainCarousel/MainCarousel";
-import {Box, Grid, IconButton, Typography} from "@mui/material";
+import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
 import ItemsCarousel from "react-multi-carousel";
-import ProductCard from "../../components/ProductCarouselItem/ProductCard";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import deserts from "../../assets/mainPage/deserts.jpg";
 import fish from "../../assets/mainPage/fish.jpg";
 import banner3 from "../../assets/mainPage/banner3.jpg";
@@ -22,21 +22,10 @@ import visa from "../../assets/mainPage/Visa.svg";
 import mir from "../../assets/mainPage/mir.svg";
 import fruit from "../../assets/banana.png";
 import catalog from "../../store/catalog";
+import arrowNext from '../../assets/arrowNext.png';
+import arrowPrev from '../../assets/arrowPrev.png';
 
 const MainContent = () => {
-
-	const carouselProducts = [
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-	]
 
 	const responsive = {
 		desktop: {
@@ -49,15 +38,42 @@ const MainContent = () => {
 		},
 	}
 
+	const [newProductsCarRef, setNewProductsCarRef] = useState();
+	const [drinksCarRef, setDrinksCarRef] = useState();
+	const [nutsCarRef, setNutsCarRef] = useState();
+
+
+	const customArrows = (ref) => ( <div>
+		<Button onClick={() => ref.previous()}>
+			<img src={arrowPrev} alt=""/>
+		</Button>
+		<Button onClick={() => ref.next()}>
+			<img src={arrowNext} alt=""/>
+		</Button>
+	</div>)
+
 	return (
 		<>
 			<MainCarousel/>
 
-			<Typography variant={'h4'} fontWeight={700}>
-				Новое поступление
-			</Typography>
 
-			<ItemsCarousel responsive={responsive}>
+			<Box sx={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				my: 2
+			}}>
+				<Typography variant={'h4'} fontWeight={700}>
+					Новое поступление
+				</Typography>
+
+				{customArrows(newProductsCarRef)}
+			</Box>
+
+
+			<ItemsCarousel responsive={responsive}
+							ref={(el) => setNewProductsCarRef(el)}
+						   arrows={false}
+			>
 				{catalog.products.map((item) => (
 					<ProductCard product={item}/>
 				))}
@@ -150,20 +166,44 @@ const MainContent = () => {
 			</Box>
 
 
-			<Typography variant={'h4'} fontWeight={700}>
-				Вода, соки, напитки
-			</Typography>
-			<ItemsCarousel responsive={responsive}>
+
+			<Box sx={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				my: 2
+			}}>
+				<Typography variant={'h4'} fontWeight={700}>
+					Вода, соки, напитки
+
+				</Typography>
+
+				{customArrows(drinksCarRef)}
+			</Box>
+			<ItemsCarousel responsive={responsive}
+						   ref={(el) => setDrinksCarRef(el)}
+						   arrows={false}
+			>
 				{catalog.products.map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
 
-			<Typography variant={'h4'} fontWeight={700}>
-				Орехи
-			</Typography>
-			<ItemsCarousel responsive={responsive}>
+			<Box sx={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				my: 2
+			}}>
+				<Typography variant={'h4'} fontWeight={700}>
+					Орехи
+				</Typography>
+
+				{customArrows(nutsCarRef)}
+			</Box>
+			<ItemsCarousel responsive={responsive}
+						   ref={(el) => setNutsCarRef(el)}
+						   arrows={false}
+			>
 				{catalog.products.map((item) => (
 					<ProductCard product={item}/>
 				))}

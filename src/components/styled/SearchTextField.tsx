@@ -11,5 +11,7 @@ export const SearchTextField = styled(TextField, {name: "SearchTextField"})<Text
 			borderColor: 'black',
 			borderWidth: 1,
 		}
-	}
+	},
+	p: 0,
+	m: 0
 }))

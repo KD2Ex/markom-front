@@ -2,6 +2,11 @@
 :root {
 
 }
+
+a {
+    text-decoration: none;
+    color: black;
+}
 /*
 :root {
   font-family: "Source Sans 3";

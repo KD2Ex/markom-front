@@ -5,8 +5,12 @@ export const DefaultButton = styled(Button)<ButtonProps>(({ theme }) => ({
 	color: '#ffffff',
 	fontWeight: 'bold',
 	"&:hover": {
-		backgroundColor: theme.palette.primary.secondary,
+		backgroundColor: theme.palette.primary.hover,
+		boxShadow: 'none'
 	},
 	height: '48px',
 	textTransform: 'none',
+	boxShadow: 'none',
+	minWidth: 50,
+	borderRadius: 8
 }))

@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {DefaultButton} from "../styled/DefaultButton";
 import cart from '../../store/cart'
 import {observer} from "mobx-react-lite";
+import CartGroupButtons from "../CartGroupButtons/CartGroupButtons";
 
 interface CardItemProps {
 	cartItem: IProduct,
@@ -15,6 +16,7 @@ interface CardItemProps {
 const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 
 	const handleDelete = () => {
+		cartItem.quantityInCar = 0;
 		cart.deleteCartItem(cartItem);
 	}
 
@@ -33,7 +35,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 				<Box>
 
 					<BoldH>
-						{cartItem.title}, {cartItem.quantity} {cartItem.unit}
+						{cartItem.title}, {cartItem.quantityInCar} {cartItem.unit}
 					</BoldH>
 					<BoldH fontSize={14}>
 						{`(${cartItem.weight} кг)`}
@@ -44,37 +46,10 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 					{cartItem.price} P
 				</Typography>
 
-				<ButtonGroup>
-					<DefaultButton
-						sx={{
-							height: 'fit-content',
-							p: 0,
-							fontWeight: 400
-						}}
-					>
-						---
-					</DefaultButton>
+				<Box sx={{width: '15%'}}>
+					<CartGroupButtons product={cartItem} height={'28px'} content={cartItem.quantityInCar}/>
+				</Box>
 
-					<Typography sx={{
-						bgcolor: theme => theme.palette.primary.secondary,
-						color: 'white',
-						width: '40px',
-						textAlign: 'center',
-					}}>
-						2
-					</Typography>
-
-					<DefaultButton
-						sx={{
-							height: 'fit-content',
-							p: 0,
-							fontWeight: 400
-						}}
-					>
-						+
-					</DefaultButton>
-
-				</ButtonGroup>
 			</Grid>
 
 			<Grid item xs={1} sx={{justifyContent: 'space-between', display: 'flex', flexDirection: 'column'}}>
@@ -83,7 +58,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 				</IconButton>
 
 				<Typography fontSize={24} fontWeight={400}>
-					{cartItem.price * cartItem.quantity}
+					{cartItem.price * cartItem.quantityInCar}
 				</Typography>
 
 

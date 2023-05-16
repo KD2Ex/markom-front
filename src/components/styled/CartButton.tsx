@@ -9,4 +9,5 @@ export const CartButton = styled(Button)<ButtonProps>( ({theme}) => ({
 	"&:hover": {
 		backgroundColor: theme.palette.primary.secondary,
 	},
+	borderRadius: 8
 }))

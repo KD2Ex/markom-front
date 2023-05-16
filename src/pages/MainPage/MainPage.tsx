@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
+import {Box, Breadcrumbs, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import styles from './MainPage.module.css';
 import MainPageBar from "../../components/MainPageBar/MainPageBar";
@@ -21,7 +21,7 @@ import banner4 from '../../assets/mainPage/banner4.jpg'
 import info from '../../assets/mainPage/info_2.jpg'
 import brandLogo from '../../assets/mainPage/Component.jpg'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import ProductCard from "../../components/ProductCarouselItem/ProductCard";
+import ProductCard from "../../components/ProductCard/ProductCard";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import visa from '../../assets/mainPage/Visa.svg'
 import masterCard from '../../assets/mainPage/masterCard.svg'
@@ -29,106 +29,127 @@ import mir from '../../assets/mainPage/mir.svg'
 import markomLogoBlack from '../../assets/mainPage/markom_logo_bw.svg'
 import SearchIcon from '@mui/icons-material/Search';
 import MainContent from "./MainContent";
-import {Outlet} from 'react-router-dom'
+import {Link, Outlet, useLocation} from 'react-router-dom'
 
 
 
 const MainPage = () => {
 
+	const params = useLocation()
+	console.log(params.pathname)
 
 	return (
-		<Box sx={{ maxWidth: '1503px', margin: 'auto'}}>
+		<Box>
 
 			<NavBar/>
-			<Box>
+
+
+			<Box  sx={{ maxWidth: '1503px', margin: 'auto', display: 'flex', flexDirection: 'column', gap: 2}}>
 				<MainPageBar/>
+				{params.pathname !== '/' && !params.pathname.includes('profile') &&
+					<Breadcrumbs>
+						<Link style={{textDecoration: 'none'}} to={`/`}>Главная</Link>
+						{params.pathname.split('/').slice(1).map((item, index, arr) => {
+							if (index !== arr.length - 1) {
+								return <Link to={`/${item}`}>{item}</Link>
+							}
+							return <Typography>{item}</Typography>
+						})}
+					</Breadcrumbs>
+				}
+
 
 				<Outlet/>
 
-				<Grid
-					container
-					sx={{
-						width: '100%',
-						padding: 6,
-						bgcolor: theme => theme.palette.primary.bg
-					}}
+			</Box>
+
+			<Box sx={{bgcolor: theme => theme.palette.primary.bg}}>
+
+			<Grid
+				container
+				sx={{
+					width: '100%',
+					padding: 6,
+					maxWidth: '1503px', margin: 'auto'
+				}}
+			>
+				<Grid item xs={10}
+					  sx={{
+						  justifyContent: 'flex-end',
+						  flexDirection: 'column',
+						  display: 'flex'
+					  }}
 				>
-					<Grid item xs={10}
-						  sx={{
-							  justifyContent: 'flex-end',
-							  flexDirection: 'column',
-							  display: 'flex'
-						  }}
+
+
+					<Box
+						sx={{
+							display: 'inline-flex',
+
+						}}
 					>
-
-
-						<Box
-							sx={{
-								display: 'inline-flex',
-
-							}}
-						>
-							<img src={markomLogoBlack} alt=""/>
-						</Box>
-
-					</Grid>
-
-					<Grid item xs={2}
-						  sx={{
-							  display: 'flex',
-							  justifyContent: 'space-between',
-							  flexDirection: 'column',
-							  gap: 1
-						  }}
-					>
-
-						<Typography fontWeight={700}>
-							Мы в соц. сетях
-						</Typography>
-
-						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black'}}>
-							<IconButton>
-								<YouTubeIcon/>
-							</IconButton>
-							<IconButton>
-								<YouTubeIcon/>
-							</IconButton>
-							<IconButton>
-								<YouTubeIcon/>
-							</IconButton>
-							<IconButton>
-								<YouTubeIcon/>
-							</IconButton>
-						</Box>
-
-						<Typography fontWeight={700} variant={'h5'}>
-							+7(800) 800-80-80
-						</Typography>
-						<Typography fontSize={12}>
-							Справочная служба
-						</Typography>
-
-						<Typography fontWeight={700} variant={'h5'}>
-							+7(800) 800-80-80
-						</Typography>
-						<Typography fontSize={12}>
-							Интернет-магазин
-						</Typography>
-
-
-						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black', gap: 2, mt: 2}}>
-
-							<img src={masterCard} alt=""/>
-							<img src={visa} alt=""/>
-							<img src={mir} alt=""/>
-
-
-						</Box>
-					</Grid>
+						<img src={markomLogoBlack} alt=""/>
+					</Box>
 
 				</Grid>
 
+				<Grid item xs={2}
+					  sx={{
+						  display: 'flex',
+						  justifyContent: 'space-between',
+						  flexDirection: 'column',
+						  gap: 1
+					  }}
+				>
+
+					<Typography fontWeight={700}>
+						Мы в соц. сетях
+					</Typography>
+
+					<Box sx={{display: 'flex', flexDirection: 'row', color: 'black'}}>
+						<IconButton>
+							<YouTubeIcon/>
+						</IconButton>
+						<IconButton>
+							<YouTubeIcon/>
+						</IconButton>
+						<IconButton>
+							<YouTubeIcon/>
+						</IconButton>
+						<IconButton>
+							<YouTubeIcon/>
+						</IconButton>
+					</Box>
+
+					<Typography fontWeight={700} variant={'h5'}>
+						+7(800) 800-80-80
+					</Typography>
+					<Typography fontSize={12}>
+						Справочная служба
+					</Typography>
+
+					<Typography fontWeight={700} variant={'h5'}>
+						+7(800) 800-80-80
+					</Typography>
+					<Typography fontSize={12}>
+						Интернет-магазин
+					</Typography>
+
+
+					<Box sx={{display: 'flex', flexDirection: 'row', color: 'black', gap: 2, mt: 2}}>
+
+						<img src={masterCard} alt=""/>
+						<img src={visa} alt=""/>
+						<img src={mir} alt=""/>
+
+
+					</Box>
+				</Grid>
+
+			</Grid>
 			</Box>
+
+
 		</Box>
 	);
 };

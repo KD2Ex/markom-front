@@ -12,4 +12,5 @@ export interface IProduct {
 	img: string,
 	discountPrice?: number | null,
 	category: ICategory,
+	quantityInCar: number,
 }

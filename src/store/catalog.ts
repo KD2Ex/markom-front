@@ -15,7 +15,8 @@ class Catalog {
 			title: 'Авакадо',
 			category: category.categories[0],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},
 		{
 			id: 2,
@@ -26,7 +27,8 @@ class Catalog {
 			title: 'Ананас',
 			category: category.categories[0],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},{
 			id: 3,
 			img: banana,
@@ -36,7 +38,8 @@ class Catalog {
 			title: 'Гранат',
 			category: category.categories[0],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},{
 			id: 4,
 			img: banana,
@@ -46,7 +49,8 @@ class Catalog {
 			title: 'Грейпфрут',
 			category: category.categories[1],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},
 		{
 			id: 5,
@@ -57,7 +61,8 @@ class Catalog {
 			title: 'Груша дюшес',
 			category: category.categories[1],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},
 		{
 			id: 6,
@@ -68,9 +73,21 @@ class Catalog {
 			title: 'Персик',
 			category: category.categories[2],
 			unit: 'шт',
-			weight: 2
+			weight: 2,
+			quantityInCar: 0
 		},
-
+		{
+			id: 7,
+			img: banana,
+			discountPrice: null,
+			price: 300,
+			quantity: 1,
+			title: 'Персик',
+			category: category.categories[2],
+			unit: 'шт',
+			weight: 2,
+			quantityInCar: 0
+		},
 
 	]
 

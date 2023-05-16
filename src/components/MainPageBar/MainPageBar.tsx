@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Box, Button, IconButton, InputAdornment, OutlinedInput, Popper, TextField, Typography} from "@mui/material";
 import logo from '../../assets/markom_logo.svg';
 import {DefaultButton} from "../styled/DefaultButton";
@@ -11,20 +11,19 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {Link} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import cart from "../../store/cart";
-
-
-/*const useOutlinedInputStyles=  makeStyles({
-	root: {
-		"& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-			borderColor: "black",
-		}
-	}
-})*/
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 
 const MainPageBar = observer(() => {
 
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
+		setSearchQuery(event.target.value);
+	}
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -35,30 +34,43 @@ const MainPageBar = observer(() => {
 	const id = open ? 'simple-popper' : undefined;
 
 	const anchor = useRef(null);
+
 	useEffect(() => {
 		console.log(anchor.current)
 	}, [])
 
 	return (
 		<Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 2}}>
+
 			<Box sx={{position: 'absolute', top: '13%',}} ref={anchor}>
 			</Box>
+
 			<IconButton
 				component={Link}
 				to={'/'}
 			>
 				<img src={logo}/>
 			</IconButton>
-			<Box sx={{position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.4)', display: open ? 'flex': 'none'}}>
+
+			<Box sx={{position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.4)', display: open ? 'flex': 'none'}}
+				onClick={() => setAnchorEl(null)}
+			>
+
 			</Box>
+
 			<DefaultButton
 				aria-describedby={id}
-				sx={{height: '48px', }}
+				sx={{ width: 'fit-content' }}
 				variant={'contained'}
 				onClick={handleClick}
 
 			>
-				Каталог
+				{anchorEl ? <CloseIcon sx={{ml: 2}}/> : <MenuIcon sx={{ml: 2}}/>}
+				<Typography fontWeight='bold' sx={{px: 2}}>
+					Каталог
+
+				</Typography>
+
 			</DefaultButton>
 
 				<Popper id={id} open={open} anchorEl={anchor.current} placement={'bottom'} sx={{maxHeight: '70vh'}} >
@@ -79,16 +91,26 @@ const MainPageBar = observer(() => {
 
 			<SearchTextField
 				fullWidth
-				sx={{p: 0, m: 0}}
+				sx={{}}
 				placeholder={'Поиск'}
+				value={searchQuery}
+				onChange={handleSearchChange}
 				InputProps={{endAdornment: <InputAdornment position={"end"}>
-						<DefaultButton sx={{m: 0, p: 0}}>
+						<DefaultButton sx={{m: 0, p: 0}} component={Link} to={`/search/${searchQuery}`}>
 							<SearchIcon sx={{width: '100%', height: '100%', p: 1}}/>
 						</DefaultButton>
 					</InputAdornment>
 				}}>
 
 			</SearchTextField>
+
+			<IconButton
+				sx={{color: 'black'}}
+				component={Link}
+				to={'/profile'}
+			>
+				<PermIdentityIcon/>
+			</IconButton>
 
 			<IconButton
 				sx={{color: 'black'}}
