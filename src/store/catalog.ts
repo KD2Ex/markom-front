@@ -2,21 +2,24 @@ import {makeAutoObservable} from "mobx";
 import {IProduct} from "../models/IProduct";
 import banana from '../assets/banana.png';
 import category from "./category";
+import ProductService from "../api/services/ProductService";
 
 class Catalog {
 
 	products: IProduct[] = [
 		{
 			id: 1,
-			img: banana,
+			image: banana,
 			discountPrice: null,
 			price: 300,
-			quantity: 1,
+			amount: 1,
+			discount: 0,
 			title: 'Авакадо',
 			category: category.categories[0],
 			unit: 'шт',
 			weight: 2,
-			quantityInCar: 0
+			quantityInCar: 0,
+			description: 'Сладкий пирожок с яблочным повидлом внутри'
 		},
 		{
 			id: 2,
@@ -95,7 +98,9 @@ class Catalog {
 		makeAutoObservable(this)
 	}
 
-
+	async fetchProducts() {
+		this.products = await ProductService.fetchProducts();
+	}
 
 }
 

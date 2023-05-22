@@ -20,21 +20,17 @@ class Cart {
 	}
 
 	addCartItem(cartItem: IProduct) {
-		//if (this.cartItems.find((item) => item === cartItem))
 		cartItem.quantityInCar = 1;
 		this.cartItems.push(cartItem);
 		this.updatePrice();
-		// this.totalPrice += cartItem.price * cartItem.quantityInCar;
 	}
 
 	deleteCartItem(cartItem: IProduct) {
 		cartItem.quantityInCar = 0;
 		console.log(cartItem)
-		//const result = this.cartItems.filter((item) => item.id !== cartItem.id)
 		const index = this.cartItems.indexOf(cartItem);
 		this.cartItems.splice(index, 1)
 		this.updatePrice();
-		//this.totalPrice -= cartItem.price * cartItem.quantity
 	}
 
 	changeQuantity(cartItem: IProduct, number: number) {
@@ -45,8 +41,14 @@ class Cart {
 		} else {
 			item.quantityInCar += number;
 		}
-		//this.totalPrice += item.price * number
-		//item.quantityInCar += number;
+		this.updatePrice();
+	}
+
+	clear() {
+		this.cartItems.forEach((item) => {
+			item.quantityInCar = 0
+		})
+
 		this.updatePrice();
 	}
 

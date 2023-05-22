@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Grid, OutlinedInput, Typography, useTheme} from "@mui/material";
+import {Box, Button, Grid, Modal, OutlinedInput, Typography, useTheme} from "@mui/material";
 import BoldH from "../../components/styled/BoldH";
 import ItemsCarousel from "react-multi-carousel";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -10,23 +10,13 @@ import CartItem from "../../components/CartItem/CartItem";
 import {SearchTextField} from "../../components/styled/SearchTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import catalog from "../../store/catalog";
+import {Link} from "react-router-dom";
 
 const CartPage = observer(() => {
 
-	const theme = useTheme();
+	const [open, setOpen] = useState(false);
 
-	const carouselProducts = [
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-		{img: fruit, name: 'Гранат', unit: 'кг', unitValue: '1', price: 290},
-	]
+	const theme = useTheme();
 
 
 	const responsive = {
@@ -176,9 +166,34 @@ const CartPage = observer(() => {
 
 
 
-						<DefaultButton>
+						<DefaultButton onClick={() => {
+							cart.clear();
+							setCartItems([])
+							setOpen(true)
+						}}>
 							Оформить заказ
 						</DefaultButton>
+
+						<Modal
+							open={open}
+							onClose={() => setOpen(false)}
+						>
+							<Box sx={{
+								position: 'absolute' as 'absolute',
+								top: '50%',
+								left: '50%',
+								transform: 'translate(-50%, -50%)',
+								width: 400,
+								bgcolor: 'background.paper',
+								boxShadow: 8,
+								p: 4,
+								borderRadius: 2
+							}}>
+								Заказ успешно оформлен!
+
+							</Box>
+						</Modal>
+
 					</Box>
 
 				</Grid>

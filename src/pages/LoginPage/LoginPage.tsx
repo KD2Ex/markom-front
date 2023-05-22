@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, Typography, useTheme} from "@mui/material";
 import styles from './LoginPage.module.css'
 import BoldH from "../../components/styled/BoldH";
 import {SearchTextField} from "../../components/styled/SearchTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import {ProfileTextField} from "../../components/styled/ProfileTextField";
-import {useSearchParams, useNavigate} from "react-router-dom";
+import {useSearchParams, useNavigate, Link} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import user from "../../store/user";
+import UserService from "../../api/services/UserService";
 
 
 
@@ -27,10 +28,15 @@ const LoginPage = observer(() => {
 		setPassword(e.target.value);
 	}
 
-	const handleLogin = () => {
-		user.login()
-		navigate('/profile')
+	const handleLogin = async () => {
+		user.login(username, password)
 	}
+
+	useEffect(() => {
+		if (user.isAuth) {
+			navigate('/profile')
+		}
+	}, [user.isAuth])
 
 	return (
 		<Box className={styles.columnFlex}>
@@ -76,7 +82,10 @@ const LoginPage = observer(() => {
 					textDecoration: 'underline',
 					textTransform: 'none',
 					fontSize: 16
-				}}>
+				}}
+					component={Link}
+						to={'/reg'}
+				>
 					Зарегистрироваться
 				</Button>
 			</Box>

@@ -36,19 +36,14 @@ const CatalogPage = () => {
 	const [sortType, setSortType] = useState('');
 	const [totalCategories, setTotalCategories]: ICategory[] = useState([]);
 	let title = category.categories.find(item => item.value === id)?.title
-	console.log(title)
 	title = title ?  title : groupCategories.groupCategories.find(item => item.value === id)?.title ;
-	console.log(title)
-	console.log(id)
 
 	useEffect(() => {
 
 		const groupedCategories = groupCategories.groupCategories.map(item => item.categories.map(cat => cat))
 		const arr1d = [].concat(...groupedCategories);
 		const values = arr1d.map(item => item.value)
-		console.log(values)
 		const cat = category.categories.filter(item => !values.includes(item.value))
-		console.log(cat)
 		setTotalCategories(cat)
 	}, [])
 

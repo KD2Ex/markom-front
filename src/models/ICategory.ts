@@ -1,7 +1,8 @@
+import {IGroupCategory} from "./IGroupCategory";
 
 
 export interface ICategory {
 	id: number,
-	title: string,
-	value: string,
+	name: string,
+	group: IGroupCategory
 }

@@ -27,7 +27,6 @@ const MainPageBar = observer(() => {
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(anchorEl ? null : event.currentTarget);
-		console.log(event.currentTarget)
 	};
 
 	const open = Boolean(anchorEl);
@@ -36,7 +35,6 @@ const MainPageBar = observer(() => {
 	const anchor = useRef(null);
 
 	useEffect(() => {
-		console.log(anchor.current)
 	}, [])
 
 	return (

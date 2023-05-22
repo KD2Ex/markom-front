@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {ICategory} from "../models/ICategory";
+import CategoryService from "../api/services/CategoryService";
 
 class Category {
 
@@ -51,6 +52,10 @@ class Category {
 		makeAutoObservable(this)
 	}
 
+
+	async fetchCategories() {
+		this.categories = await CategoryService.fetchCategories();
+	}
 
 }
 

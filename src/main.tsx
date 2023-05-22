@@ -18,6 +18,10 @@ import OrdersPage from "./pages/OrdersPage/OrdersPage";
 import ProfileDataPage from "./pages/ProfileDataPage/ProfileDataPage";
 import AdressPage from "./pages/AdressPage/AdressPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import NewOrderPage from "./pages/NewOrderPage/NewOrderPage";
+import AdminPage, {loader as adminLoader} from "./pages/AdminPage/AdminPage";
+import ProductPage, {loader as productLoader} from "./pages/ProductPage/ProductPage";
+import RegPage from "./pages/RegPage/RegPage";
 
 
 const router = createBrowserRouter([
@@ -41,9 +45,18 @@ const router = createBrowserRouter([
                     {
                         path: ':id',
                         element: <CatalogContent/>,
-                        loader: productsLoader
-                    }
+                        loader: productsLoader,
+                        children: [
+
+                        ]
+                    },
+
                 ]
+            },
+            {
+                path: 'catalog/:id/:productId',
+                element: <ProductPage/>,
+                loader: productLoader
             },
             {
                 path: 'search/:searchId',
@@ -80,7 +93,20 @@ const router = createBrowserRouter([
                 path: 'login',
                 element: <LoginPage/>
             },
+            {
+                path: 'reg',
+                element: <RegPage/>
+            },
+            {
+                path: 'newOrder',
+                element: <NewOrderPage/>
+            },
         ]
+    },
+    {
+        path: 'admin',
+        element: <AdminPage/>,
+        loader: adminLoader
     }
 ])
 

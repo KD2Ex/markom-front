@@ -26,6 +26,7 @@ const ProfilePage = observer(() => {
 				<Link to={'/profile/orders'}>История заказов</Link>
 				<Link to={'/profile/adress'}>Адресс доставки</Link>
 				<Link to={'/profile/data'}>Контактные данные</Link>
+				<Link to={'/admin'}>Админ панель</Link>
 			</Grid>
 			<Grid item xs>
 				<Outlet/>

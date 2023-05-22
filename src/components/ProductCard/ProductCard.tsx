@@ -8,6 +8,7 @@ import {IProduct} from "../../models/IProduct";
 import {UnitType} from "../../models/types/UnitType";
 import {observer} from "mobx-react-lite";
 import CartGroupButtons from "../CartGroupButtons/CartGroupButtons";
+import {Link} from "react-router-dom";
 
 interface ProductCarouselItemProps {
 	product: IProduct,
@@ -27,7 +28,7 @@ const ProductCard: FC<ProductCarouselItemProps> = observer( ({product}) => {
 	return (
 		<Box sx={{mr: 2, p: 2, border: '1px solid rgba(214,214,214,0.3)', borderRadius: 2}} >
 			<img src={product.img} alt="" style={{width: '100%'}}/>
-			<p>{`${product.title}, ${product.quantity} ${product.unit}`}</p>
+			<Link to={`/catalog/${product.category.value}/${product.id}`}>{`${product.title}, ${product.quantity} ${product.unit}`}</Link>
 			<Typography variant={'h5'} fontWeight={700}>{`${product.price} ₽`}</Typography>
 
 			{product.quantityInCar === 0

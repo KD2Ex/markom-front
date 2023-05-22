@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Breadcrumbs, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import styles from './MainPage.module.css';
@@ -30,13 +30,21 @@ import markomLogoBlack from '../../assets/mainPage/markom_logo_bw.svg'
 import SearchIcon from '@mui/icons-material/Search';
 import MainContent from "./MainContent";
 import {Link, Outlet, useLocation} from 'react-router-dom'
+import ProductService from "../../api/services/ProductService";
+import catalog from "../../store/catalog";
 
 
 
 const MainPage = () => {
 
 	const params = useLocation()
-	console.log(params.pathname)
+
+	useEffect(() => {
+		(async () => {
+			catalog.fetchProducts();
+		})()
+
+	}, [])
 
 	return (
 		<Box>
@@ -65,88 +73,88 @@ const MainPage = () => {
 
 			<Box sx={{bgcolor: theme => theme.palette.primary.bg}}>
 
-			<Grid
-				container
-				sx={{
-					width: '100%',
-					padding: 6,
-					maxWidth: '1503px', margin: 'auto'
-				}}
-			>
-				<Grid item xs={10}
-					  sx={{
-						  justifyContent: 'flex-end',
-						  flexDirection: 'column',
-						  display: 'flex'
-					  }}
+				<Grid
+					container
+					sx={{
+						width: '100%',
+						padding: 6,
+						maxWidth: '1503px', margin: 'auto'
+					}}
 				>
-
-
-					<Box
-						sx={{
-							display: 'inline-flex',
-
-						}}
+					<Grid item xs={10}
+						  sx={{
+							  justifyContent: 'flex-end',
+							  flexDirection: 'column',
+							  display: 'flex'
+						  }}
 					>
-						<img src={markomLogoBlack} alt=""/>
-					</Box>
+
+
+						<Box
+							sx={{
+								display: 'inline-flex',
+
+							}}
+						>
+							<img src={markomLogoBlack} alt=""/>
+						</Box>
+
+					</Grid>
+
+					<Grid item xs={2}
+						  sx={{
+							  display: 'flex',
+							  justifyContent: 'space-between',
+							  flexDirection: 'column',
+							  gap: 1
+						  }}
+					>
+
+						<Typography fontWeight={700}>
+							Мы в соц. сетях
+						</Typography>
+
+						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black'}}>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+							<IconButton>
+								<YouTubeIcon/>
+							</IconButton>
+						</Box>
+
+						<Typography fontWeight={700} variant={'h5'}>
+							+7(800) 800-80-80
+						</Typography>
+						<Typography fontSize={12}>
+							Справочная служба
+						</Typography>
+
+						<Typography fontWeight={700} variant={'h5'}>
+							+7(800) 800-80-80
+						</Typography>
+						<Typography fontSize={12}>
+							Интернет-магазин
+						</Typography>
+
+
+						<Box sx={{display: 'flex', flexDirection: 'row', color: 'black', gap: 2, mt: 2}}>
+
+							<img src={masterCard} alt=""/>
+							<img src={visa} alt=""/>
+							<img src={mir} alt=""/>
+
+
+						</Box>
+					</Grid>
 
 				</Grid>
-
-				<Grid item xs={2}
-					  sx={{
-						  display: 'flex',
-						  justifyContent: 'space-between',
-						  flexDirection: 'column',
-						  gap: 1
-					  }}
-				>
-
-					<Typography fontWeight={700}>
-						Мы в соц. сетях
-					</Typography>
-
-					<Box sx={{display: 'flex', flexDirection: 'row', color: 'black'}}>
-						<IconButton>
-							<YouTubeIcon/>
-						</IconButton>
-						<IconButton>
-							<YouTubeIcon/>
-						</IconButton>
-						<IconButton>
-							<YouTubeIcon/>
-						</IconButton>
-						<IconButton>
-							<YouTubeIcon/>
-						</IconButton>
-					</Box>
-
-					<Typography fontWeight={700} variant={'h5'}>
-						+7(800) 800-80-80
-					</Typography>
-					<Typography fontSize={12}>
-						Справочная служба
-					</Typography>
-
-					<Typography fontWeight={700} variant={'h5'}>
-						+7(800) 800-80-80
-					</Typography>
-					<Typography fontSize={12}>
-						Интернет-магазин
-					</Typography>
-
-
-					<Box sx={{display: 'flex', flexDirection: 'row', color: 'black', gap: 2, mt: 2}}>
-
-						<img src={masterCard} alt=""/>
-						<img src={visa} alt=""/>
-						<img src={mir} alt=""/>
-
-
-					</Box>
-				</Grid>
-
-			</Grid>
 			</Box>
 
 
