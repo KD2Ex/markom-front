@@ -11,6 +11,13 @@ import {SearchTextField} from "../../components/styled/SearchTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import catalog from "../../store/catalog";
 import {Link} from "react-router-dom";
+import order from "../../store/order";
+
+export const loader = async () => {
+	const cartItem = await cart.fetchCart();
+	return { cartItem }
+}
+
 
 const CartPage = observer(() => {
 
@@ -18,6 +25,9 @@ const CartPage = observer(() => {
 
 	const theme = useTheme();
 
+	const handleCreateOrder = async () => {
+		await order.createOrder()
+	}
 
 	const responsive = {
 		desktop: {
@@ -30,20 +40,20 @@ const CartPage = observer(() => {
 		},
 	}
 
-	const [cartItems, setCartItems] = useState(cart.cartItems);
+	const [cartItems, setCartItems] = useState(cart.cartItems.items);
 	const [totalPrice, setTotalPrice] = useState(0);
 
 	useEffect(() => {
 		console.log(cartItems)
 
 		const sum = cartItems.reduce((prev, current) => {
-			return prev + current.price
+			return prev + current.product.price
 		}, 0)
 
 		setTotalPrice(sum);
 		console.log(sum)
 
-	}, [cart.cartItems.length])
+	}, [JSON.stringify(cart.cartItems.items)])
 
 	return (
 		<div>
@@ -58,7 +68,7 @@ const CartPage = observer(() => {
 			>
 
 				<Grid container spacing={2} item xs={9}>
-					{cartItems.length === 0
+					{cartItems.length == 0
 						?  <Typography
 							sx={{
 								my: 4
@@ -66,11 +76,11 @@ const CartPage = observer(() => {
 							>
 							Ваша корзина пуста
 						</Typography>
-						: cartItems.map((item, index) => {
+						: cart.cartItems.items.map((item, index) => {
 							console.log(cartItems.length)
 							return <CartItem
-								cartItem={item}
-
+								cartItem={item.product}
+								count={item.count}
 							/>
 
 							}
@@ -166,11 +176,7 @@ const CartPage = observer(() => {
 
 
 
-						<DefaultButton onClick={() => {
-							cart.clear();
-							setCartItems([])
-							setOpen(true)
-						}}>
+						<DefaultButton onClick={handleCreateOrder}>
 							Оформить заказ
 						</DefaultButton>
 

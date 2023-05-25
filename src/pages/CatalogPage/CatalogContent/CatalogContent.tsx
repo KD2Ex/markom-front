@@ -8,12 +8,21 @@ import {Simulate} from "react-dom/test-utils";
 import CategoryCard from "./components/CategoryCard/CategoryCard";
 import banana from '../../../assets/banana.png'
 import category from "../../../store/category";
+import groupCategories from "../../../store/groupCategories";
 
 export const loader = async ({ params }) => {
 	console.log(params)
 	const grouped = params.id.split('_');
 	console.log(grouped)
-	const loadedProducts: IProduct[] = catalog.products.filter(value => params.id.includes(value.category.value)) // await getProducts
+	let loadedProducts: IProduct[] = []
+	if (grouped.length === 1) {
+		loadedProducts = catalog.products.filter(product => product.category.group?.id === Number(grouped[0]))
+	} else {
+		loadedProducts = catalog.products.filter(product => product.category.id === Number(grouped[1]))
+
+	}
+
+	//const loadedProducts: IProduct[] = catalog.products.filter(value => params.id == value.category.id) // await getProducts
 	return { loadedProducts, grouped };
 }
 
@@ -22,17 +31,22 @@ const CatalogContent = () => {
 	const {loadedProducts, grouped} = useLoaderData();
 
 
-	const [products, setProducts] = useState<IProduct[]>([])
-	const categoryTitles = grouped.map(item => category.categories.find(cat => cat.value === item))
-	console.log(categoryTitles)
+	const categories = category.categories.filter(cat => cat.group?.id === +grouped[0])
+
+	console.log(categories)
+	console.log(loadedProducts)
 
 	return (
 		<>
-			{grouped.length > 1 &&
+			{grouped.length === 1 &&
 				<Grid container spacing={2}>
-					{categoryTitles.map(item => (
+					{categories.map(item => (
 						<Grid item xs={3} sx={{p: 2}}>
-							<CategoryCard category={item} img={banana}/>
+							<CategoryCard category={item} img={
+								catalog.products.filter(product => product.category.id === item.id)?.find(item =>
+									item?.image
+								)?.image
+							}/>
 						</Grid>
 					))}
 				</Grid>

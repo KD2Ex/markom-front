@@ -1,37 +1,25 @@
 import {makeAutoObservable} from "mobx";
+import OrderService from "../api/services/OrderService";
+import {IOrder} from "../models/IOrder";
 
 
 class Order {
 
-	orders = [
-		{
-			id: 1,
-			date: new Date(),
-			status: "Принят",
-			isPayed: 'Оплачен',
-			cost: 1129,
-		},
-		{
-			id: 2,
-			date: new Date(),
-			status: "Принят",
-			isPayed: 'Оплачен',
-			cost: 1129,
-		},
-		{
-			id: 3,
-			date: new Date(),
-			status: "Принят",
-			isPayed: 'Оплачен',
-			cost: 1129,
-		},
+	orders: IOrder[] = [
+
 	]
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
+	async fetchOrders() {
+		this.orders = await OrderService.getOrders();
+	}
 
+	async createOrder() {
+		await OrderService.createOrder();
+	}
 
 }
 

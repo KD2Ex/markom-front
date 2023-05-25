@@ -2,10 +2,11 @@ import React, {FC, useState} from 'react';
 import {Box, Collapse, ListItemButton, Typography} from "@mui/material";
 import {ExpandLess, ExpandMore} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {ICategory} from "../../../../models/ICategory";
 
 interface CategoryProps {
 	title: string,
-	subCategories?: [],
+	subCategories?: ICategory[],
 	value: string,
 }
 
@@ -33,9 +34,9 @@ const Category: FC<CategoryProps> = ({title, subCategories = [], value}) => {
 				>
 					<Box sx={{p: 2}}>
 						{subCategories?.map((elem) => (
-							<ListItemButton component={Link} to={`${elem.value}`}>
+							<ListItemButton component={Link} to={`${value}_${elem.id}`}>
 								<Typography fontSize={16} sx={{flexGrow:1}}>
-									{elem.title}
+									{elem.name}
 								</Typography>
 							</ListItemButton>
 						))}

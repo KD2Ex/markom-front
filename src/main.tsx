@@ -1,13 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import App, {loader as mainLoader} from './App'
 import './index.css'
 import {defaultTheme} from "./themes";
 import {ThemeProvider} from "@mui/material";
 import {BrowserRouter, createBrowserRouter, RouterProvider} from "react-router-dom";
 import MainPage from "./pages/MainPage/MainPage";
 import MainContent from "./pages/MainPage/MainContent";
-import CartPage from "./pages/CartPage/CartPage";
+import CartPage, {loader as cartLoader} from "./pages/CartPage/CartPage";
 import CatalogPage, {loader as catalodLoader} from "./pages/CatalogPage/CatalogPage";
 import CatalogContent, {loader as productsLoader} from "./pages/CatalogPage/CatalogContent/CatalogContent";
 import SearchPage, {loader as searchLoader} from "./pages/SearchPage/SearchPage";
@@ -22,12 +22,16 @@ import NewOrderPage from "./pages/NewOrderPage/NewOrderPage";
 import AdminPage, {loader as adminLoader} from "./pages/AdminPage/AdminPage";
 import ProductPage, {loader as productLoader} from "./pages/ProductPage/ProductPage";
 import RegPage from "./pages/RegPage/RegPage";
+import {useFetchData} from "./hooks/useFetch";
+import AdminProductPage from "./pages/AdminPage/children/AdminProductPage/AdminProductPage";
+import AdminOrdersPage, {loader as adminOrdersLoader} from "./pages/AdminPage/children/AdminOrderPage/AdminOrdersPage";
 
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <App/>,
+        loader: mainLoader,
         children: [
             {
                 path: '/',
@@ -35,7 +39,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'cart',
-                element: <CartPage/>
+                element: <CartPage/>,
+                loader: cartLoader
             },
             {
                 path: 'catalog',
@@ -106,9 +111,23 @@ const router = createBrowserRouter([
     {
         path: 'admin',
         element: <AdminPage/>,
-        loader: adminLoader
+        loader: adminLoader,
+        children: [
+            {
+                path: 'products',
+                element: <AdminProductPage/>,
+            },
+            {
+                path: 'orders',
+                element: <AdminOrdersPage/>,
+                loader: adminOrdersLoader
+
+            }
+        ]
     }
 ])
+
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

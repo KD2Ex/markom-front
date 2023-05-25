@@ -10,13 +10,13 @@ import CartGroupButtons from "../CartGroupButtons/CartGroupButtons";
 
 interface CardItemProps {
 	cartItem: IProduct,
-	deleteThis: any,
+	count: number
 }
 
-const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
+const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 
 	const handleDelete = () => {
-		cartItem.quantityInCar = 0;
+		count = 0;
 		cart.deleteCartItem(cartItem);
 	}
 
@@ -25,7 +25,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 
 			<Grid item xs={2}>
 				<img
-					src={cartItem.img}
+					src={cartItem.image}
 					alt=""
 					style={{width: '100%', height: '100%'}}
 				/>
@@ -35,11 +35,9 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 				<Box>
 
 					<BoldH>
-						{cartItem.title}, {cartItem.quantityInCar} {cartItem.unit}
+						{cartItem.title}, {count} {cartItem.measurement.name}
 					</BoldH>
-					<BoldH fontSize={14}>
-						{`(${cartItem.weight} кг)`}
-					</BoldH>
+
 				</Box>
 
 				<Typography>
@@ -47,7 +45,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 				</Typography>
 
 				<Box sx={{width: '15%'}}>
-					<CartGroupButtons product={cartItem} height={'28px'} content={cartItem.quantityInCar}/>
+					<CartGroupButtons product={cartItem} height={'28px'} content={count}/>
 				</Box>
 
 			</Grid>
@@ -58,7 +56,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, deleteThis}) => {
 				</IconButton>
 
 				<Typography fontSize={24} fontWeight={400}>
-					{cartItem.price * cartItem.quantityInCar}
+					{cartItem.price * count}
 				</Typography>
 
 

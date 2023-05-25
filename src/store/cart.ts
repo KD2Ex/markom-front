@@ -1,46 +1,47 @@
 import {IProduct} from "../models/IProduct";
 import {makeAutoObservable} from "mobx";
+import CartService from "../api/services/CartService";
+import {ICart} from "../models/ICart";
 
 
 class Cart {
 
 	totalPrice: number = 0;
-	cartItems: IProduct[] = [
-
-	];
+	cartItems: ICart = {};
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
+	async fetchCart() {
+		this.cartItems = await CartService.getCart();
+		this.updatePrice();
+	}
+
 	updatePrice() {
-		this.totalPrice = this.cartItems.reduce((prev, next) => (
-			prev += next.price * next.quantityInCar
+		this.totalPrice = this.cartItems.items.reduce((prev, next) => (
+			prev += next.product.price * next.count
 		), 0)
 	}
 
-	addCartItem(cartItem: IProduct) {
-		cartItem.quantityInCar = 1;
-		this.cartItems.push(cartItem);
+	async addCartItem(cartItem: IProduct) {
+		console.log(await CartService.addToCart(cartItem.id, 1))
+		this.cartItems.items.push({id: cartItem.id, product: cartItem, count: 1});
 		this.updatePrice();
 	}
 
-	deleteCartItem(cartItem: IProduct) {
-		cartItem.quantityInCar = 0;
-		console.log(cartItem)
-		const index = this.cartItems.indexOf(cartItem);
-		this.cartItems.splice(index, 1)
+	async deleteCartItem(cartItem: IProduct) {
+		//const index = this.cartItems.items.indexOf(cartItem);
+		//this.cartItems.splice(index, 1)
+		await CartService.deleteFromCart(cartItem.id);
+		await this.fetchCart();
 		this.updatePrice();
 	}
 
-	changeQuantity(cartItem: IProduct, number: number) {
-		const item = this.cartItems.find((item) => item === cartItem)
-		console.log(item)
-		if (item.quantityInCar === 1 && number < 0) {
-			this.deleteCartItem(cartItem)
-		} else {
-			item.quantityInCar += number;
-		}
+	async changeQuantity(cartItem: IProduct, number: number) {
+
+		console.log(await CartService.addToCart(cartItem.id, number))
+		await this.fetchCart();
 		this.updatePrice();
 	}
 

@@ -29,10 +29,11 @@ const LoginPage = observer(() => {
 	}
 
 	const handleLogin = async () => {
-		user.login(username, password)
+		await user.login(username, password)
 	}
 
 	useEffect(() => {
+
 		if (user.isAuth) {
 			navigate('/profile')
 		}

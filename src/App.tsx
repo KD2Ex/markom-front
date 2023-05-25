@@ -11,23 +11,23 @@ import user from "./store/user";
 import catalog from "./store/catalog";
 import category from "./store/category";
 import measurement from "./store/measurement";
+import {useFetchData} from "./hooks/useFetch";
+
+
+export const loader = async () => {
+	await useFetchData()
+	return null
+}
 
 function App() {
+
 
 	useEffect(() => {
 
 		user.checkAuth();
 
-	}, [])
-
-	useEffect(() => {
-
 		if (user.isAuth) {
 			(async () => {
-				console.log('log')
-				await catalog.fetchProducts();
-				await category.fetchCategories();
-				await measurement.fetchMeasures();
 			})()
 		}
 

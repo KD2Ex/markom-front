@@ -3,6 +3,7 @@ import {CartButton} from "../styled/CartButton";
 import {Box, ButtonGroup, Typography} from "@mui/material";
 import cart from "../../store/cart";
 import {IProduct} from "../../models/IProduct";
+import {getCartCount} from "../../utils/getCartCount";
 
 interface CartGroupButtonsProps {
 	product: IProduct,
@@ -12,14 +13,22 @@ interface CartGroupButtonsProps {
 
 const CartGroupButtons: FC<CartGroupButtonsProps> = ({product, height, content}) => {
 
-	const handleAdd = () => {
-		cart.changeQuantity(product, 1)
-		console.log(product.quantityInCar)
+	const handleAdd = async () => {
+		const count = cart.cartItems.items.find(item => item.product.id === product.id)?.count
+		await cart.changeQuantity(product, count + 1)
 	}
 
-	const handleDelete = () => {
-		cart.changeQuantity(product, -1)
-		console.log(product.quantityInCar)
+	const handleDelete = async () => {
+		let count = getCartCount(product.id);
+		if (count) {
+			count -= 1;
+			if ((count > 0)) {
+				await cart.changeQuantity(product, count)
+			} else {
+				await cart.deleteCartItem(product);
+			}
+		}
+
 	}
 
 

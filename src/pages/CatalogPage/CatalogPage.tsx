@@ -33,18 +33,27 @@ const CatalogPage = () => {
 	const {categories} = useLoaderData();
 	const {id} = useParams();
 
+
 	const [sortType, setSortType] = useState('');
-	const [totalCategories, setTotalCategories]: ICategory[] = useState([]);
-	let title = category.categories.find(item => item.value === id)?.title
-	title = title ?  title : groupCategories.groupCategories.find(item => item.value === id)?.title ;
+	//title = title ?  title : groupCategories.groupCategories.find(item => item.value === id)?.title ;
+
+	const ids = id?.split('_');
+	let title = '';
+	if (ids?.length === 1) {
+		title = groupCategories.groupCategories.find(item => item.id === +ids[0])?.name
+	} else if (ids) {
+		title = category.categories.find(item => item.id === +ids[1])?.name
+	} else {
+		title = 'Каталог'
+	}
 
 	useEffect(() => {
 
-		const groupedCategories = groupCategories.groupCategories.map(item => item.categories.map(cat => cat))
-		const arr1d = [].concat(...groupedCategories);
+		//const groupedCategories = groupCategories.groupCategories.map(item => item.categories.map(cat => cat))
+	/*	const arr1d = [].concat(...groupedCategories);
 		const values = arr1d.map(item => item.value)
 		const cat = category.categories.filter(item => !values.includes(item.value))
-		setTotalCategories(cat)
+		setTotalCategories(cat)*/
 	}, [])
 
 	const handleChange = (event: SelectChangeEvent) => {
@@ -58,16 +67,14 @@ const CatalogPage = () => {
 			<Box
 				sx={{
 					display:'flex',
-					justifyContent: 'space-between'
+					justifyContent: 'space-between',
+					mb: 2
 				}}
 			>
 
 				<BoldH>
-					{title
-					}
+					{title}
 				</BoldH>
-
-
 				<FormControl>
 					<InputLabel>Сортировка</InputLabel>
 					<Select
@@ -137,16 +144,16 @@ const CatalogPage = () => {
 					>
 						{groupCategories.groupCategories.map(item => (
 							<Category
-								title={item.title}
-								subCategories={item.categories}
-								value={item.value}
+								title={item.name}
+								subCategories={category.categories.filter(cat => cat.group?.id === item.id)}
+								value={item.id}
 							/>
 						))}
 
-						{totalCategories.map(item => (
+						{category.categories.filter((item) => item.group === null).map(item => (
 							<Category
-								title={item.title}
-								value={item.value}
+								title={item.name}
+								value={'0_'+item.id}
 							/>
 						))}
 

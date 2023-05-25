@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {IGroupCategory} from "../models/IGroupCategory";
 import category from "./category";
+import GroupCategoriesService from "../api/services/GroupCategoriesService";
 
 
 class GroupCategories {
@@ -30,10 +31,15 @@ class GroupCategories {
 
 	constructor() {
 		makeAutoObservable(this)
-		this.groupCategories.map(item => {
+		/*this.groupCategories.map(item => {
 			return item.value = item.categories.map(item => item.value).join('_');
-		})
+		})*/
 	}
+
+	async fetchGroupCategories() {
+		this.groupCategories = await GroupCategoriesService.getGroupCategories();
+	}
+
 }
 
 export default new GroupCategories()

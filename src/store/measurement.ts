@@ -13,6 +13,7 @@ class Measurement {
 
 	async fetchMeasures() {
 		this.measurements = await MeasurementService.fetchMeasures();
+		console.log(this.measurements)
 	}
 
 }

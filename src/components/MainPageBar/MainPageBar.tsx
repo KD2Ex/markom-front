@@ -4,7 +4,6 @@ import logo from '../../assets/markom_logo.svg';
 import {DefaultButton} from "../styled/DefaultButton";
 import {SearchTextField} from "../styled/SearchTextField";
 import styles from '../MainPageBar/MainPageBar.module.css'
-import {catalog} from "./data";
 import banana from '../../assets/banana.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -14,6 +13,9 @@ import cart from "../../store/cart";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import category from "../../store/category";
+import groupCategories from "../../store/groupCategories";
+import catalog from "../../store/catalog";
 
 
 const MainPageBar = observer(() => {
@@ -29,12 +31,18 @@ const MainPageBar = observer(() => {
 		setAnchorEl(anchorEl ? null : event.currentTarget);
 	};
 
+	const handleClose = () => {
+		setAnchorEl(null);
+	}
+
 	const open = Boolean(anchorEl);
 	const id = open ? 'simple-popper' : undefined;
 
 	const anchor = useRef(null);
 
+
 	useEffect(() => {
+
 	}, [])
 
 	return (
@@ -73,15 +81,39 @@ const MainPageBar = observer(() => {
 
 				<Popper id={id} open={open} anchorEl={anchor.current} placement={'bottom'} sx={{maxHeight: '70vh'}} >
 					<Box sx={{ }} className={styles.popper}>
-						{catalog.map((item, index) => (
-							<Box className={styles.catalogItem}>
-								<img style={{width: '100%', height: '60%'}} src={item.img} alt=""/>
-								<Typography component={Link} to={'/catalog/f'}>
-									{item.title}
+						{groupCategories.groupCategories.map(group => (
+							<Box className={styles.catalogItem} onClick={handleClose}>
+								<Link to={`/catalog/${group.id}`} style={{width: '100%',}}>
+									<img style={{width: '100%', height: '100%'}} src={
+										catalog.products.filter(product => product.category.group?.id === group.id)?.find(item =>
+											item?.image
+										)?.image
+									} alt=""/>
+
+								</Link>
+								<Typography component={Link} to={`/catalog/${group.id}`}  sx={{
+									fontWeight: 'bold'
+								}}>
+									{group.name}
 								</Typography>
-								{item.subCategories.map(item => (
-									<a>{item.title}</a>
+								{category.categories.filter(cat => cat.group?.id === group.id).map(item => (
+									<Link to={`/catalog/${group.id}_${item.id}`}>
+										{item.name}
+									</Link>
 								))}
+							</Box>
+						))}
+						{category.categories.filter(item => item.group === null).map((item, index) => (
+							<Box className={styles.catalogItem} onClick={handleClose}>
+								<Link to={`/catalog/0_${item.id}`} style={{width: '100%',}}>
+									<img style={{width: '100%', height: '100%'}} src={catalog.products.find(product => product.category.id === item.id)?.image} alt=""/>
+
+								</Link>
+								<Typography component={Link} to={`/catalog/0_${item.id}`} sx={{
+									fontWeight: 'bold'
+								}}>
+									{item.name}
+								</Typography>
 							</Box>
 						))}
 					</Box>

@@ -1,7 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import UserService from "../api/services/UserService";
 
-
 class User {
 
 	isAuth = false;
@@ -13,11 +12,13 @@ class User {
 	async login(login: string, password: string,) {
 		const response = await UserService.login(login, password);
 		console.log(response)
-		localStorage.setItem('token', response.data.accessToken);
+		localStorage.setItem('token', response.data.token);
 		this.isAuth = true;
 	}
 
-	async checkAuth() {
+	checkAuth() {
+		const token = localStorage.getItem('token');
+
 		if (localStorage.getItem('token')) {
 			this.isAuth = true
 		}

@@ -32,6 +32,8 @@ import MainContent from "./MainContent";
 import {Link, Outlet, useLocation} from 'react-router-dom'
 import ProductService from "../../api/services/ProductService";
 import catalog from "../../store/catalog";
+import {useFetchData} from "../../hooks/useFetch";
+import {getUrlName} from "../../utils/getUrlNames";
 
 
 
@@ -39,12 +41,12 @@ const MainPage = () => {
 
 	const params = useLocation()
 
-	useEffect(() => {
-		(async () => {
-			catalog.fetchProducts();
-		})()
+	const aliases = {
+		catalog: 'Каталог',
+		cart: 'Корзина'
+	}
 
-	}, [])
+
 
 	return (
 		<Box>
@@ -59,9 +61,9 @@ const MainPage = () => {
 						<Link style={{textDecoration: 'none'}} to={`/`}>Главная</Link>
 						{params.pathname.split('/').slice(1).map((item, index, arr) => {
 							if (index !== arr.length - 1) {
-								return <Link to={`/${item}`}>{item}</Link>
+								return <Link key={index} to={`/${item}`}>{aliases[item]}</Link>
 							}
-							return <Typography>{item}</Typography>
+							return <Typography key={index}>{getUrlName(item)}</Typography>
 						})}
 					</Breadcrumbs>
 				}

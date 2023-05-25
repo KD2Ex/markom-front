@@ -1,3 +1,3 @@
 
 
-export type StatusType = "Принят" | "Оплачен" | "Выполнен";
+export type StatusType = "process" | "give" | "cancel";
