@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Outlet, useLoaderData, useParams} from "react-router-dom";
+import {Outlet, useLoaderData, useParams, useSearchParams} from "react-router-dom";
 import {
 	Box,
 	FormControl,
-	Grid,
+	Grid, Input,
 	InputLabel,
 	List,
 	ListItemButton,
 	MenuItem,
 	Select,
-	SelectChangeEvent,
+	SelectChangeEvent, Slider, TextField,
 	Typography
 } from "@mui/material";
 import BoldH from "../../components/styled/BoldH";
@@ -20,22 +20,25 @@ import catalog from "../../store/catalog";
 import category from "../../store/category";
 import groupCategories from "../../store/groupCategories";
 import {ICategory} from "../../models/ICategory";
+import {useFetchData} from "../../hooks/useFetch";
+import CategoryList from "./components/CategoryList/CategoryList";
 
 export const loader = async () => {
-	const categories: any = []; // await getCategories();
-	console.log('loaded')
-	return {categories};
-}
 
+	console.log('loaded')
+	return null;
+}
 
 const CatalogPage = () => {
 
-	const {categories} = useLoaderData();
 	const {id} = useParams();
 
 
 	const [sortType, setSortType] = useState('');
-	//title = title ?  title : groupCategories.groupCategories.find(item => item.value === id)?.title ;
+	const [price, setPrice] = useState([0, 2000])
+
+	const [items, setItems] = useState([])
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	const ids = id?.split('_');
 	let title = '';
@@ -47,18 +50,32 @@ const CatalogPage = () => {
 		title = 'Каталог'
 	}
 
-	useEffect(() => {
+	const handleStartCostChange = (e) => {
+		setPrice(price => [e.target.value, price[1]])
+	}
+	const handleEndCostChange = (e) => {
+		setPrice(price => [price[0], e.target.value])
+	}
 
-		//const groupedCategories = groupCategories.groupCategories.map(item => item.categories.map(cat => cat))
-	/*	const arr1d = [].concat(...groupedCategories);
-		const values = arr1d.map(item => item.value)
-		const cat = category.categories.filter(item => !values.includes(item.value))
-		setTotalCategories(cat)*/
-	}, [])
+	const handleCostSliderChange = (event, newValue, ) => {
+		/*setStartPrice(newValue[0])
+		setEndPrice(newValue[1])*/
+		setPrice(newValue)
+	}
 
 	const handleChange = (event: SelectChangeEvent) => {
 		setSortType(event.target.value as string);
+		setSearchParams({startPrice: price[0], endPrice: price[1], sortType: event.target.value})
 	}
+
+	const handleFilterApply = () => {
+		setSearchParams({startPrice: price[0], endPrice: price[1], sortType: sortType})
+	}
+
+	useEffect(() => {
+
+
+	}, [])
 
 
 	return (
@@ -87,7 +104,7 @@ const CatalogPage = () => {
 						}}
 					>
 
-						<MenuItem value={''}>
+						<MenuItem value={''} >
 							Сортировка
 						</MenuItem>
 
@@ -97,9 +114,7 @@ const CatalogPage = () => {
 						<MenuItem value={'desc'}>
 							По убыванию цены
 						</MenuItem>
-						<MenuItem value={'new'}>
-							Сначала новые
-						</MenuItem>
+
 						<MenuItem value={'title'}>
 							По названию
 						</MenuItem>
@@ -110,7 +125,7 @@ const CatalogPage = () => {
 			</Box>
 
 
-			<Grid container>
+			<Grid container spacing={4}>
 				<Grid item xs={3}>
 
 					<Typography variant={'h5'} fontWeight={600}>
@@ -123,41 +138,53 @@ const CatalogPage = () => {
 
 						}}
 					>
-						<FilterItem title={'Цена'} filterElements={[<DefaultButton/>]}/>
+						<FilterItem title={'Цена'} filterElements={[<>
+							<Slider
+								size="small"
+								value={price}
+								onChange={handleCostSliderChange}
+								aria-label="Small"
+								valueLabelDisplay="auto"
+								max={2000}
+								min={0}
+								step={10}
+							/>
+
+							<Box sx={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								gap: 1
+							}}>
+								<TextField
+									variant={'outlined'}
+									value={price[0]}
+									onChange={handleStartCostChange}
+									type={'number'}
+								></TextField>
+								<TextField
+									variant={'outlined'}
+									value={price[1]}
+									onChange={handleEndCostChange}
+									type={'number'}
+								></TextField>
+							</Box>
+
+
+						</>]}/>
 					</List>
 
 					<DefaultButton
 						sx={{
 							width: '100%',
 						}}
+						onClick={handleFilterApply}
 					>
 						Применить
 					</DefaultButton>
 
 
+					<CategoryList/>
 
-					<List
-						sx={{
-							width: '100%',
-
-						}}
-					>
-						{groupCategories.groupCategories.map(item => (
-							<Category
-								title={item.name}
-								subCategories={category.categories.filter(cat => cat.group?.id === item.id)}
-								value={item.id}
-							/>
-						))}
-
-						{category.categories.filter((item) => item.group === null).map(item => (
-							<Category
-								title={item.name}
-								value={'0_'+item.id}
-							/>
-						))}
-
-					</List>
 
 				</Grid>
 				<Grid item xs={9}>

@@ -41,7 +41,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 				</Box>
 
 				<Typography>
-					{cartItem.price} P
+					{cartItem.price}  ₽
 				</Typography>
 
 				<Box sx={{width: '15%'}}>
@@ -56,7 +56,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 				</IconButton>
 
 				<Typography fontSize={24} fontWeight={400}>
-					{cartItem.price * count}
+					{cartItem.price * count} ₽
 				</Typography>
 
 

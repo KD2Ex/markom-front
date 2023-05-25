@@ -63,7 +63,7 @@ const MainContent = () => {
 				my: 2
 			}}>
 				<Typography variant={'h4'} fontWeight={700}>
-					Новое поступление
+					Фрукты и ягоды
 				</Typography>
 
 				{customArrows(newProductsCarRef)}
@@ -74,12 +74,10 @@ const MainContent = () => {
 							ref={(el) => setNewProductsCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.map((item) => (
+				{catalog.products.filter(item => item.category.name === 'Фрукты и ягоды').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
-
-
 
 
 			<Grid container spacing={4} sx={{p: 2,
@@ -183,7 +181,7 @@ const MainContent = () => {
 						   ref={(el) => setDrinksCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.map((item) => (
+				{catalog.products.filter(item => item.category.name === 'Вода, соки, напитки').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
@@ -204,7 +202,7 @@ const MainContent = () => {
 						   ref={(el) => setNutsCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.map((item) => (
+				{catalog.products.filter(item => item.category.name === 'Орехи').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>

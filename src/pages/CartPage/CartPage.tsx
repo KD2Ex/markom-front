@@ -27,6 +27,8 @@ const CartPage = observer(() => {
 
 	const handleCreateOrder = async () => {
 		await order.createOrder()
+		await cart.fetchCart();
+		setOpen(true)
 	}
 
 	const responsive = {

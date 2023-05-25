@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useLoaderData } from 'react-router-dom';
+import {useLoaderData, useSearchParams} from 'react-router-dom';
 import {Grid} from "@mui/material";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import catalog from "../../../store/catalog";
@@ -9,8 +9,12 @@ import CategoryCard from "./components/CategoryCard/CategoryCard";
 import banana from '../../../assets/banana.png'
 import category from "../../../store/category";
 import groupCategories from "../../../store/groupCategories";
+import {useFetchData} from "../../../hooks/useFetch";
+import load = Simulate.load;
+import BoldH from "../../../components/styled/BoldH";
 
 export const loader = async ({ params }) => {
+	await useFetchData();
 	console.log(params)
 	const grouped = params.id.split('_');
 	console.log(grouped)
@@ -28,13 +32,47 @@ export const loader = async ({ params }) => {
 
 const CatalogContent = () => {
 
-	const {loadedProducts, grouped} = useLoaderData();
-
-
+	const {loadedProducts, grouped} = useLoaderData() as {loadedProducts: IProduct[], grouped: any[]};
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [products, setProducts] = useState(loadedProducts);
 	const categories = category.categories.filter(cat => cat.group?.id === +grouped[0])
 
 	console.log(categories)
 	console.log(loadedProducts)
+	console.log(products)
+	useEffect(() => {
+		console.log(searchParams.get('startPrice'))
+		let prod = loadedProducts.filter(item => item.price >= +searchParams.get('startPrice') && item.price <= +searchParams.get('endPrice'))
+
+		switch (searchParams.get('sortType')) {
+			case 'asc': {
+				prod.sort((a,b) => a.price - b.price)
+				break;
+			}
+			case 'desc': {
+				prod.sort((a, b) => b.price - a.price);
+				break;
+			}
+			case 'name': {
+				prod.sort((a, b) => {
+					if (a.title < b.title) {
+						return -1;
+					}
+					if (a.title > b.title) {
+						return 1;
+					}
+					return 0;
+				})
+				break;
+			}
+		}
+
+		setProducts(prod);
+	}, [searchParams])
+
+	useEffect(() => {
+		setProducts(loadedProducts)
+	}, [JSON.stringify(loadedProducts)])
 
 	return (
 		<>
@@ -53,11 +91,15 @@ const CatalogContent = () => {
 			}
 
 			<Grid container spacing={2}>
-				{loadedProducts.map(item => (
+				{products.length !== 0 ? products.map(item => (
 					<Grid item xs={3}>
 						<ProductCard product={item}/>
 					</Grid>
-				))}
+				))
+					: <BoldH sx={{p: 2}}>
+						Товары не найдены
+					</BoldH>
+				}
 
 			</Grid>
 		</>

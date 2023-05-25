@@ -6,13 +6,15 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import catalog from "../../store/catalog";
 import { useLoaderData } from 'react-router-dom';
 import ProductCard from "../../components/ProductCard/ProductCard";
+import {useFetchData} from "../../hooks/useFetch";
 
 
-export const loader = ({params}) => {
+export const loader = async ({params}) => {
 	const searchQuery = params.searchId.toLowerCase();
 	console.log(searchQuery)
+	await useFetchData()
 	const products = catalog.products.filter((item) => item.title.toLowerCase().includes(searchQuery)
-		|| item.category.title.toLowerCase().includes(searchQuery)
+		|| item.category.name.toLowerCase().includes(searchQuery)
 	);
 	return { products }
 }
@@ -38,11 +40,15 @@ const SearchPage = () => {
 			/>
 
 			<Grid container>
-				{products.map((item) => (
+				{products.length !== 0 ? products.map((item) => (
 					<Grid item xs={2.2}>
 						<ProductCard product={item}/>
 					</Grid>
-				))}
+				))
+					: <BoldH>
+						Товары не найдены!
+					</BoldH>
+				}
 			</Grid>
 
 		</Box>

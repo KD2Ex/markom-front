@@ -4,11 +4,13 @@ import {Box, ButtonGroup, Typography} from "@mui/material";
 import cart from "../../store/cart";
 import {IProduct} from "../../models/IProduct";
 import {getCartCount} from "../../utils/getCartCount";
+import {useForceUpdate} from "../../hooks/useForceUpdate";
+import {Link} from "react-router-dom";
 
 interface CartGroupButtonsProps {
 	product: IProduct,
 	height: string,
-	content: strin,
+	content: string,
 }
 
 const CartGroupButtons: FC<CartGroupButtonsProps> = ({product, height, content}) => {
@@ -16,6 +18,7 @@ const CartGroupButtons: FC<CartGroupButtonsProps> = ({product, height, content})
 	const handleAdd = async () => {
 		const count = cart.cartItems.items.find(item => item.product.id === product.id)?.count
 		await cart.changeQuantity(product, count + 1)
+		forceUpdate();
 	}
 
 	const handleDelete = async () => {
@@ -31,6 +34,7 @@ const CartGroupButtons: FC<CartGroupButtonsProps> = ({product, height, content})
 
 	}
 
+	const forceUpdate = useForceUpdate()
 
 	return (
 		<ButtonGroup sx={{p: 0, width: '100%',
@@ -43,8 +47,8 @@ const CartGroupButtons: FC<CartGroupButtonsProps> = ({product, height, content})
 			>
 				-
 			</CartButton>
-			<CartButton sx={{width: '100%'}} >
-				<Box sx={{p: 0}}>
+			<CartButton sx={{width: '100%',  borderRadius: 0}} component={Link} to={'/cart'}>
+				<Box sx={{p: 0, borderRadius: 0}}>
 
 					<Typography sx={{fontSize: 12, textAlign: 'center'}}>
 						{content}

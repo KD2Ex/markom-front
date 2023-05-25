@@ -53,8 +53,7 @@ const MainPage = () => {
 
 			<NavBar/>
 
-
-			<Box  sx={{ maxWidth: '1503px', margin: 'auto', display: 'flex', flexDirection: 'column', gap: 2}}>
+			<Box  sx={{ maxWidth: '1503px', margin: 'auto', display: 'flex', flexDirection: 'column', gap: 2, minHeight: '70vh'}}>
 				<MainPageBar/>
 				{params.pathname !== '/' && !params.pathname.includes('profile') &&
 					<Breadcrumbs>
@@ -67,7 +66,6 @@ const MainPage = () => {
 						})}
 					</Breadcrumbs>
 				}
-
 
 				<Outlet/>
 
