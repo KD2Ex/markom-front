@@ -26,7 +26,7 @@ import {DefaultButton} from "../../components/styled/DefaultButton";
 import visa from '../../assets/mainPage/Visa.svg'
 import masterCard from '../../assets/mainPage/masterCard.svg'
 import mir from '../../assets/mainPage/mir.svg'
-import markomLogoBlack from '../../assets/mainPage/markom_logo_bw.svg'
+import markomLogoBlack from '../../assets/unnamed.png'
 import SearchIcon from '@mui/icons-material/Search';
 import MainContent from "./MainContent";
 import {Link, Outlet, useLocation} from 'react-router-dom'
@@ -92,8 +92,11 @@ const MainPage = () => {
 
 							}}
 						>
-							<img src={markomLogoBlack} alt=""/>
+							<img src={markomLogoBlack} alt="" style={{
+								filter: 'saturate(0%) contrast(120%)'
+							}}/>
 						</Box>
+
 
 					</Grid>
 

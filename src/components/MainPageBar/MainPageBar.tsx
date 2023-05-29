@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Box, Button, IconButton, InputAdornment, OutlinedInput, Popper, TextField, Typography} from "@mui/material";
-import logo from '../../assets/markom_logo.svg';
+import logo from '../../assets/unnamed.png';
 import {DefaultButton} from "../styled/DefaultButton";
 import {SearchTextField} from "../styled/SearchTextField";
 import styles from '../MainPageBar/MainPageBar.module.css'
@@ -54,8 +54,13 @@ const MainPageBar = observer(() => {
 			<IconButton
 				component={Link}
 				to={'/'}
+				sx={{
+					height: '120px'
+				}}
 			>
-				<img src={logo}/>
+				<img src={logo} style={{
+					height: '100%'
+				}}/>
 			</IconButton>
 
 			<Box sx={{position: 'fixed', top: 0, bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.4)', display: open ? 'flex': 'none'}}
@@ -96,11 +101,11 @@ const MainPageBar = observer(() => {
 								}}>
 									{group.name}
 								</Typography>
-								{/*{category.categories.filter(cat => cat.group?.id === group.id).map(item => (
+								{category.categories.filter(cat => cat.group?.id === group.id).map(item => (
 									<Link to={`/catalog/${group.id}_${item.id}`}>
 										{item.name}
 									</Link>
-								))}*/}
+								))}
 							</Box>
 						))}
 						{category.categories.filter(item => item.group === null).map((item, index) => (
