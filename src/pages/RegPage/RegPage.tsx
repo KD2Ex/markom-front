@@ -44,7 +44,8 @@ const RegPage = () => {
 
 		const [lastName, firstName, patronymic] = user.split(' ')
 		console.log(lastName, firstName, patronymic, phone, email, password)
-		const result = await UserService.reg(lastName, firstName, patronymic, email, password, phone)
+		console.log(await UserService.reg(lastName, firstName, patronymic, email, password, phone))
+		navigate('/profile');
 	}
 
 	return (

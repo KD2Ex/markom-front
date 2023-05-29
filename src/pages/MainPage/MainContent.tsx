@@ -5,10 +5,13 @@ import ItemsCarousel from "react-multi-carousel";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import deserts from "../../assets/mainPage/deserts.jpg";
 import fish from "../../assets/mainPage/fish.jpg";
+import banner1 from "../../assets/mainPage/banner1.jpg";
+import banner2 from "../../assets/mainPage/banner2.jpg";
 import banner3 from "../../assets/mainPage/banner3.jpg";
 import banner4 from "../../assets/mainPage/banner4.jpg";
+import banner5 from "../../assets/mainPage/banner5.jpg";
 import meat from "../../assets/mainPage/meat.jpg";
-import info from "../../assets/mainPage/info_2.jpg";
+import info from "../../assets/mainPage/info.jpg";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import styles from "./MainPage.module.css";
 import img1 from "../../assets/mainPage/img1.svg";
@@ -17,13 +20,14 @@ import img3 from "../../assets/mainPage/img3.svg";
 import brandLogo from "../../assets/mainPage/Component.jpg";
 import markomLogoBlack from "../../assets/mainPage/markom_logo_bw.svg";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import masterCard from "../../assets/mainPage/masterCard.svg";
+import ads1 from "../../assets/mainPage/info.jpg";
 import visa from "../../assets/mainPage/Visa.svg";
 import mir from "../../assets/mainPage/mir.svg";
 import fruit from "../../assets/banana.png";
 import catalog from "../../store/catalog";
 import arrowNext from '../../assets/arrowNext.png';
 import arrowPrev from '../../assets/arrowPrev.png';
+import {Link} from "react-router-dom";
 
 const MainContent = () => {
 
@@ -52,6 +56,7 @@ const MainContent = () => {
 		</Button>
 	</div>)
 
+
 	return (
 		<>
 			<MainCarousel/>
@@ -63,7 +68,7 @@ const MainContent = () => {
 				my: 2
 			}}>
 				<Typography variant={'h4'} fontWeight={700}>
-					Фрукты и ягоды
+					Преформы
 				</Typography>
 
 				{customArrows(newProductsCarRef)}
@@ -74,67 +79,80 @@ const MainContent = () => {
 							ref={(el) => setNewProductsCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.filter(item => item.category.name === 'Фрукты и ягоды').map((item) => (
+				{catalog.products.filter(item => item.category.group?.name === 'Преформы').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
 
 			<Grid container spacing={4} sx={{p: 2,
-				'.MuiTypography-root': {fontSize: 24, marginLeft: 4, marginTop: 2},
+				'.MuiTypography-root': {fontSize: 24, marginLeft: 4, marginTop: 2, mb: 2},
 				'.MuiBox-root': {
 					border: '1px solid rgba(0,0,0,0.1)',
 					borderRadius: 2,
 					width: 'fit-content',
 
+				},
+				'& img': {
+					width: '100%',
+					height: 'auto',
+					borderRadius: '8px 8px 0 0'
 				}
 			}} >
-				<Grid item xs={6}>
+				<Grid item xs={6} component={Link} to={'/catalog/0_11'}>
 					<Box>
 
-						<img src={deserts} alt=""/>
+						<img src={banner1} alt="" style={{
+							objectFit: 'cover',
+							height: '350px',
+							width: '690px'
+						}}/>
 						<Typography>
-							Торты, десерты, сладкая выпечка
+							ПЭТ Бутылки
 						</Typography>
 					</Box>
 
 				</Grid>
-				<Grid item xs={6}>
-					<Box>
-						<img src={fish} alt=""/>
+				<Grid item xs={6} component={Link} to={'/catalog/0_12'}>
+					<Box >
+						<img src={banner2} alt="" style={{
+							objectFit: 'cover',
+							height: '350px',
+							width: '690px'
+						}}/>
 						<Typography>
-							Рыба, икра, морепродукты
+							ПЭТ гранулят
 						</Typography>
 					</Box>
 
 				</Grid>
 
-				<Grid item xs={4}>
+				<Grid item xs={4} component={Link} to={'/catalog/1'}>
 					<Box>
 						<img src={banner3} alt=""/>
 						<Typography>
-							Баннер 3
+							Преформы
 
 						</Typography>
 					</Box>
 
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={4} component={Link} to={'/catalog/0_10'}>
 					<Box>
 
 						<img src={banner4} alt=""/>
 						<Typography>
-							Баннер 4
+							ПЭТ кеги
 
 						</Typography>
 					</Box>
 
 				</Grid>
-				<Grid item xs={4}>
+				<Grid item xs={4} component={Link} to={'/catalog/0_14'}>
 					<Box>
-						<img src={meat} alt=""/>
+						<img src={banner5} alt="" />
 						<Typography>
-							Мясо
+							Колпачки
 						</Typography>
 					</Box>
 
@@ -142,26 +160,41 @@ const MainContent = () => {
 
 			</Grid>
 
-			<Box
-				sx={{
-					backgroundImage: `url(${info})`,
-					padding: 4,
+			<Box>
+				<Box sx={{
+					zIndex: 1000,
+					position: 'absolute',
 					color: 'white',
-					my: 4
-				}}
-			>
-				<Typography variant={'h4'} fontWeight={700} sx={{mb: 2}}>
-					Десерты на заказ
-				</Typography>
+					marginTop: '50px',
+					px: 3
+				}}>
+					<Typography variant={'h4'} fontWeight={700} sx={{mb: 2}}>
+						Купить легко
+					</Typography>
 
-				<Typography fontSize={20} sx={{mb: 2}}>
-					Сладкие шедевры ручной работы по рецептам нашего шеф-кондитера. Индивидуальные десерты, разнообразие начинок, индивидуальный подход! Скидки именинникам.
-				</Typography>
+					<Typography fontSize={20} sx={{mb: 2}}>
+						Оформите заявку по телефону и наш представитель поможет вам с выбором и оформлением
+						заказа.
+					</Typography>
 
-				<DefaultButton size={'small'} sx={{height: 'fit-content', px: 2, fontWeight: 600, fontSize: 16}}>
-					Узнать подробнее
-				</DefaultButton>
+					<DefaultButton size={'small'} sx={{height: 'fit-content', px: 2, fontWeight: 600, fontSize: 16}}>
+						Узнать подробнее
+					</DefaultButton>
+				</Box>
+				<Box
+					sx={{
+						color: 'white',
+						zIndex: 1,
+						width: '100%',
+						filter: 'brightness(70%)'
+					}}
+				>
+					<img src={info} alt="" style={{width: '100%', height: '250px', objectFit: 'cover'
+					}}/>
+				</Box>
+
 			</Box>
+
 
 
 
@@ -171,7 +204,7 @@ const MainContent = () => {
 				my: 2
 			}}>
 				<Typography variant={'h4'} fontWeight={700}>
-					Вода, соки, напитки
+					Бутылки ПЭТ
 
 				</Typography>
 
@@ -181,7 +214,7 @@ const MainContent = () => {
 						   ref={(el) => setDrinksCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.filter(item => item.category.name === 'Вода, соки, напитки').map((item) => (
+				{catalog.products.filter(item => item.category.name === 'ПЭТ бутылки').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
@@ -193,7 +226,7 @@ const MainContent = () => {
 				my: 2
 			}}>
 				<Typography variant={'h4'} fontWeight={700}>
-					Орехи
+					Колпачки
 				</Typography>
 
 				{customArrows(nutsCarRef)}
@@ -202,7 +235,7 @@ const MainContent = () => {
 						   ref={(el) => setNutsCarRef(el)}
 						   arrows={false}
 			>
-				{catalog.products.filter(item => item.category.name === 'Орехи').map((item) => (
+				{catalog.products.filter(item => item.category.name === 'Колпачки').map((item) => (
 					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>

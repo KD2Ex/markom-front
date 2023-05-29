@@ -53,14 +53,14 @@ const ProductCard: FC<ProductCarouselItemProps> = observer( ({product}) => {
 						px: 1,
 						borderRadius: 1,
 						color: 'white',
-						position: 'fixed'
+						position: 'absolute'
 					}}>
 						-{product.discount}%
 					</Typography>
 				}
-				<img src={product.image} alt="" style={{width: '100%', minHeight: '220px'}} />
+				<img src={product.image} alt="" style={{width: '100%', height: '220px'}} />
 			</Link>
-			<Box  sx={{minHeight: '40px'}}>
+			<Box  sx={{minHeight: '70px'}}>
 				<Typography component={Link} to={`/catalog/${product.category.name}/${product.id}`}>
 					{`${product.title}, ${product.amount} ${product.measurement.name}`}
 				</Typography>

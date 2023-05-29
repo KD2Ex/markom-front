@@ -46,8 +46,6 @@ const MainPage = () => {
 		cart: 'Корзина'
 	}
 
-
-
 	return (
 		<Box>
 
@@ -88,8 +86,6 @@ const MainPage = () => {
 							  display: 'flex'
 						  }}
 					>
-
-
 						<Box
 							sx={{
 								display: 'inline-flex',

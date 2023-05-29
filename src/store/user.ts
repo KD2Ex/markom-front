@@ -24,6 +24,11 @@ class User {
 		}
 	}
 
+	async logout() {
+		localStorage.clear();
+		this.isAuth = false;
+	}
+
 }
 
 export default new User()

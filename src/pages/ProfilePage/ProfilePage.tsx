@@ -12,6 +12,10 @@ const ProfilePage = observer(() => {
 		navigate('/login')
 	}
 
+	const handleLogout = () => {
+		user.logout();
+	}
+
 	return (
 		<Grid container>
 			<Grid item xs={1.5} sx={{
@@ -27,6 +31,7 @@ const ProfilePage = observer(() => {
 				<Link to={'/profile/adress'}>Адресс доставки</Link>
 				<Link to={'/profile/data'}>Контактные данные</Link>
 				<Link to={'/admin'}>Админ панель</Link>
+				<Link to={'/login'} onClick={handleLogout}>Выход</Link>
 			</Grid>
 			<Grid item xs>
 				<Outlet/>

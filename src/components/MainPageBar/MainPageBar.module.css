@@ -18,7 +18,10 @@
     align-items: start;
     gap: 2px;
     width: 250px;
-    height: 400px;
     flex-wrap: wrap;
     flex-direction: column;
+}
+
+.catalogItem img {
+    height: 250px;
 }

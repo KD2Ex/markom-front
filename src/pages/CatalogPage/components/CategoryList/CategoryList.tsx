@@ -3,8 +3,20 @@ import groupCategories from "../../../../store/groupCategories";
 import Category from "../Category/Category";
 import category from "../../../../store/category";
 import {List} from "@mui/material";
+import {ICategory} from "../../../../models/ICategory";
+import {resolveBaseUrl} from "vite";
 
 const CategoryList = memo(() => {
+	const compareFunc = (a: ICategory, b: ICategory) => {
+		if (a.name < b.name) {
+			return -1
+		}
+		if (a.name > b.name) {
+			return 1
+		}
+		return 0;
+	}
+
 	return (
 		<List
 			sx={{
@@ -20,7 +32,7 @@ const CategoryList = memo(() => {
 				/>
 			))}
 
-			{category.categories.filter((item) => item.group === null).map(item => (
+			{category.categories.sort((a, b) => compareFunc(a, b)).filter((item) => item.group === null).map(item => (
 				<Category
 					title={item.name}
 					value={'0_'+item.id}

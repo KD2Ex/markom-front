@@ -79,12 +79,12 @@ const MainPageBar = observer(() => {
 
 			</DefaultButton>
 
-				<Popper id={id} open={open} anchorEl={anchor.current} placement={'bottom'} sx={{maxHeight: '70vh'}} >
+				<Popper id={id} open={open} anchorEl={anchor.current} placement={'bottom'}  >
 					<Box sx={{ }} className={styles.popper}>
 						{groupCategories.groupCategories.map(group => (
 							<Box className={styles.catalogItem} onClick={handleClose}>
 								<Link to={`/catalog/${group.id}`} style={{width: '100%',}}>
-									<img style={{width: '100%', height: '100%'}} src={
+									<img style={{width: '100%', maxHeight: '250px'}} src={
 										catalog.products.filter(product => product.category.group?.id === group.id)?.find(item =>
 											item?.image
 										)?.image
@@ -96,17 +96,17 @@ const MainPageBar = observer(() => {
 								}}>
 									{group.name}
 								</Typography>
-								{category.categories.filter(cat => cat.group?.id === group.id).map(item => (
+								{/*{category.categories.filter(cat => cat.group?.id === group.id).map(item => (
 									<Link to={`/catalog/${group.id}_${item.id}`}>
 										{item.name}
 									</Link>
-								))}
+								))}*/}
 							</Box>
 						))}
 						{category.categories.filter(item => item.group === null).map((item, index) => (
 							<Box className={styles.catalogItem} onClick={handleClose}>
 								<Link to={`/catalog/0_${item.id}`} style={{width: '100%',}}>
-									<img style={{width: '100%', height: '100%'}} src={catalog.products.find(product => product.category.id === item.id)?.image} alt=""/>
+									<img style={{width: '100%',  maxHeight: '250px'}} src={catalog.products.find(product => product.category.id === item.id)?.image} alt=""/>
 
 								</Link>
 								<Typography component={Link} to={`/catalog/0_${item.id}`} sx={{
