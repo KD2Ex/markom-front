@@ -28,7 +28,7 @@ export const loader = async ({params}) => {
 
 const ProductPage = observer(() => {
 
-	const {product}: {product: IProduct} = useLoaderData()
+	const {product} = useLoaderData() as {product: IProduct}
 	const [cartQuantity, setCartQuantity] = useState(0);
 
 
@@ -42,6 +42,10 @@ const ProductPage = observer(() => {
 	useEffect(() => {
 		console.log('loaded')
 	}, [])
+
+	useEffect(() => {
+		window.scroll({top: 0, left: 0, behavior: 'smooth'})
+	}, [product])
 
 	useEffect(() => {
 		setCartQuantity(cart.cartItems.items.filter((item) => item.product.id === product.id).length)

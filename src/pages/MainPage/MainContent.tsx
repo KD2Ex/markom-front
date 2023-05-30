@@ -3,14 +3,11 @@ import MainCarousel from "../../components/MainCarousel/MainCarousel";
 import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
 import ItemsCarousel from "react-multi-carousel";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import deserts from "../../assets/mainPage/deserts.jpg";
-import fish from "../../assets/mainPage/fish.jpg";
 import banner1 from "../../assets/mainPage/banner1.jpg";
 import banner2 from "../../assets/mainPage/banner2.jpg";
 import banner3 from "../../assets/mainPage/banner3.jpg";
 import banner4 from "../../assets/mainPage/banner4.jpg";
 import banner5 from "../../assets/mainPage/banner5.jpg";
-import meat from "../../assets/mainPage/meat.jpg";
 import info from "../../assets/mainPage/info.jpg";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import styles from "./MainPage.module.css";
@@ -18,16 +15,11 @@ import img1 from "../../assets/mainPage/img1.svg";
 import img2 from "../../assets/mainPage/img2.svg";
 import img3 from "../../assets/mainPage/img3.svg";
 import brandLogo from "../../assets/mainPage/Component.jpg";
-import markomLogoBlack from "../../assets/mainPage/markom_logo_bw.svg";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import ads1 from "../../assets/mainPage/info.jpg";
-import visa from "../../assets/mainPage/Visa.svg";
-import mir from "../../assets/mainPage/mir.svg";
-import fruit from "../../assets/banana.png";
 import catalog from "../../store/catalog";
 import arrowNext from '../../assets/arrowNext.png';
 import arrowPrev from '../../assets/arrowPrev.png';
 import {Link} from "react-router-dom";
+import LoginWarningDialog from "../../components/LoginWarningDialog/LoginWarningDialog";
 
 const MainContent = () => {
 
@@ -45,6 +37,7 @@ const MainContent = () => {
 	const [newProductsCarRef, setNewProductsCarRef] = useState();
 	const [drinksCarRef, setDrinksCarRef] = useState();
 	const [nutsCarRef, setNutsCarRef] = useState();
+	const [open, setOpen] = useState(false);
 
 
 	const customArrows = (ref) => ( <div>
@@ -80,7 +73,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.group?.name === 'Преформы').map((item) => (
-					<ProductCard product={item}/>
+					<ProductCard product={item} setOpen={setOpen}/>
 				))}
 			</ItemsCarousel>
 
@@ -215,7 +208,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.name === 'ПЭТ бутылки').map((item) => (
-					<ProductCard product={item}/>
+					<ProductCard product={item} setOpen={setOpen}/>
 				))}
 			</ItemsCarousel>
 
@@ -236,7 +229,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.name === 'Колпачки').map((item) => (
-					<ProductCard product={item}/>
+					<ProductCard product={item} setOpen={setOpen}/>
 				))}
 			</ItemsCarousel>
 
@@ -321,7 +314,7 @@ const MainContent = () => {
 			</ItemsCarousel>
 
 
-
+			<LoginWarningDialog open={open} setOpen={setOpen}/>
 
 		</>
 	);

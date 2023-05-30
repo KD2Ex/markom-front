@@ -71,8 +71,14 @@ const CatalogContent = () => {
 	}, [searchParams])
 
 	useEffect(() => {
+		window.scroll({top: 0, left: 0, behavior: 'smooth'})
+
 		setProducts(loadedProducts)
 	}, [JSON.stringify(loadedProducts)])
+
+	useEffect(() => {
+
+	}, [])
 
 	return (
 		<>

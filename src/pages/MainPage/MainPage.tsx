@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Breadcrumbs, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import styles from './MainPage.module.css';
@@ -34,12 +34,14 @@ import ProductService from "../../api/services/ProductService";
 import catalog from "../../store/catalog";
 import {useFetchData} from "../../hooks/useFetch";
 import {getUrlName} from "../../utils/getUrlNames";
+import LoginWarningDialog from "../../components/LoginWarningDialog/LoginWarningDialog";
 
 
 
 const MainPage = () => {
 
 	const params = useLocation()
+
 
 	const aliases = {
 		catalog: 'Каталог',
@@ -155,6 +157,7 @@ const MainPage = () => {
 
 				</Grid>
 			</Box>
+
 
 
 		</Box>

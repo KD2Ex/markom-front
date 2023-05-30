@@ -14,19 +14,27 @@ import {catalog} from "../MainPageBar/data";
 import measurement from "../../store/measurement";
 import {getCartCount} from "../../utils/getCartCount";
 import cartLogo from '../../assets/cartLogo.png'
+import user from "../../store/user";
+import LoginWarningDialog from "../LoginWarningDialog/LoginWarningDialog";
 
 interface ProductCarouselItemProps {
 	product: IProduct,
+	setOpen: React.Dispatch<boolean>
 }
 
-const ProductCard: FC<ProductCarouselItemProps> = observer( ({product}) => {
+const ProductCard: FC<ProductCarouselItemProps> = observer( ({product, setOpen}) => {
 
 	const [cartQuantity, setCartQuantity] = useState(0);
 
 	const handleClick = async () => {
-		await cart.addCartItem(
-			product
-		)
+
+		if (user.isAuth) {
+			await cart.addCartItem(
+				product
+			)
+		} else {
+			setOpen(true);
+		}
 	}
 
 	useEffect(() => {
@@ -100,6 +108,8 @@ const ProductCard: FC<ProductCarouselItemProps> = observer( ({product}) => {
 					}
 				/>
 			}
+
+
 
 		</Box>
 	);

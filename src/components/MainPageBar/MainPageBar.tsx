@@ -7,7 +7,7 @@ import styles from '../MainPageBar/MainPageBar.module.css'
 import banana from '../../assets/banana.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import cart from "../../store/cart";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -16,12 +16,17 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import category from "../../store/category";
 import groupCategories from "../../store/groupCategories";
 import catalog from "../../store/catalog";
+import user from "../../store/user";
+import LoginWarningDialog from "../LoginWarningDialog/LoginWarningDialog";
 
 
 const MainPageBar = observer(() => {
 
+	const navigate = useNavigate();
+
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [searchQuery, setSearchQuery] = useState('');
+	const [isDialogWarningOpen, setIsDialogWarningOpen] = useState(false);
 
 	const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
@@ -33,6 +38,14 @@ const MainPageBar = observer(() => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+	}
+
+	const handleCartClick = () => {
+		if (user.isAuth) {
+			navigate('/cart')
+		} else {
+			setIsDialogWarningOpen(true);
+		}
 	}
 
 	const open = Boolean(anchorEl);
@@ -149,11 +162,14 @@ const MainPageBar = observer(() => {
 
 			<IconButton
 				sx={{color: 'black'}}
-				component={Link}
-				to={'/cart'}
+				/*component={Link}
+				to={'/cart'}*/
+				onClick={handleCartClick}
 			>
 				<ShoppingCartIcon/>
 			</IconButton>
+
+			<LoginWarningDialog open={isDialogWarningOpen} setOpen={setIsDialogWarningOpen}/>
 
 			<Typography
 				fontWeight={700}

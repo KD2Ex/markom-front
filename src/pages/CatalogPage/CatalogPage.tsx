@@ -24,7 +24,6 @@ import {useFetchData} from "../../hooks/useFetch";
 import CategoryList from "./components/CategoryList/CategoryList";
 
 export const loader = async () => {
-
 	console.log('loaded')
 	return null;
 }
@@ -73,6 +72,7 @@ const CatalogPage = () => {
 	}
 
 	useEffect(() => {
+		window.scroll({top: 0, left: 0, behavior: 'smooth'})
 
 
 	}, [])
