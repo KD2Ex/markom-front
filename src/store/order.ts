@@ -15,6 +15,12 @@ class Order {
 
 	async fetchOrders() {
 		this.orders = await OrderService.getOrders();
+		this.orders = this.orders.map(item => {
+			const date = item.orderDate.split('T')
+			date[1] = date[1].split('.')[0];
+			console.log(date.join(' '))
+			return {...item, orderDate: date.join(' ')}
+		})
 	}
 
 	async createOrder() {

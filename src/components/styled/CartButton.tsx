@@ -12,3 +12,4 @@ export const CartButton = styled(Button)<ButtonProps>( ({theme}) => ({
 	borderRadius: 8,
 	fontSize: 16
 }))
+

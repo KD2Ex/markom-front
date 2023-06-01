@@ -34,7 +34,7 @@ const NavBar = () => {
 
 						</Box>
 
-						<Box sx={{flexDirection: 'row', display: 'flex'}}>
+						<Box sx={{flexDirection: 'row', display: 'flex', gap: 1}}>
 							<Typography>
 								Доставка с 8:00 до 23:00
 							</Typography>

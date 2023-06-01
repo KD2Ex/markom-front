@@ -2,20 +2,15 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import order from "../../../../store/order";
 import {DataGrid, GridActionsCellItem, GridRowParams} from "@mui/x-data-grid";
 import catalog from "../../../../store/catalog";
-import {Box, Button, Grid, MenuItem, Select} from "@mui/material";
-import {IMeasurement} from "../../../../models/IMeasurement";
-import measurement from "../../../../store/measurement";
-import {ICategory} from "../../../../models/ICategory";
-import category from "../../../../store/category";
-import SaveIcon from "@mui/icons-material/Save";
+import {Box, Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import ProductService from "../../../../api/services/ProductService";
 import ProductItem from "./components/ProductItem";
 import OrderService from "../../../../api/services/OrderService";
 import {OrderStatus} from "../../../../models/enums/OrderStatus";
 import DialogOrder from "./components/DialogOrder";
 import {useForceUpdate} from "../../../../hooks/useForceUpdate";
 import BoldH from "../../../../components/styled/BoldH";
+import UserInfo from "./components/UserInfo";
 
 
 export const loader = async () => {
@@ -87,10 +82,7 @@ const AdminOrdersPage = () => {
 		(row: GridRowParams) => async () => {
 			console.log(row)
 			console.log(await OrderService.changeStatus(row.id, OrderStatus[row.status - 2]))
-			/*console.log(row.id)
-			console.log(await ProductService.updateProduct(row))
-			await catalog.fetchProducts();
-			console.log(rows)*/
+
 		},
 		[]
 	)
@@ -101,10 +93,7 @@ const AdminOrdersPage = () => {
 			console.log(await OrderService.deleteOrder(row.id))
 			await order.fetchOrders();
 			forceUpdate();
-			/*console.log(row.id)
-			console.log(await ProductService.deleteProduct(row.id))
-			await catalog.fetchProducts();
-			console.log(rows)*/
+
 		},
 		[]
 	)
@@ -122,56 +111,73 @@ const AdminOrdersPage = () => {
 	}, [JSON.stringify(rowSelectionModel)])
 
 	return (
-		<div>
-			<Box sx={{width: '100%'}}>
-				<DataGrid
-					columns={columns}
-					rows={rows}
-					processRowUpdate={(newRow, oldRow) => {
-						//console.log(newRow)
-						let product = catalog.products.find((item) => item.id === newRow.id)
-						return newRow
-					}}
-					rowSelectionModel={rowSelectionModel}
-					onRowSelectionModelChange={(newRow) => {
-						console.log(newRow)
-						setRowSelectionModel(newRow)
-						//setChangingOrder(order.orders.find(item => item.id === newRow[0]))
-					}}
-					onRowClick={(props) => {
-						console.log(props)
-						setChangingOrder(props.row)
-					}}
-				>
+		<>
+			<Grid container spacing={2}>
 
-				</DataGrid>
+				<Grid item xs={8}>
 
-				{rowSelectionModel &&
-					<>
-                        <BoldH>Товары в заказе</BoldH>
-                        <Grid container spacing={2} sx={{
-							mt: 2
+				<Box sx={{width: '100%'}}>
+					<DataGrid
+						columns={columns}
+						rows={rows}
+						processRowUpdate={(newRow, oldRow) => {
+							//console.log(newRow)
+							let product = catalog.products.find((item) => item.id === newRow.id)
+							return newRow
+						}}
+						rowSelectionModel={rowSelectionModel}
+						onRowSelectionModelChange={(newRow) => {
+							console.log(newRow)
+							setRowSelectionModel(newRow)
+							//setChangingOrder(order.orders.find(item => item.id === newRow[0]))
+						}}
+						onRowClick={(props) => {
+							console.log(props)
+							setChangingOrder(props.row)
+						}}
+					>
+
+					</DataGrid>
+
+
+
+
+				</Box>
+				</Grid>
+
+
+				<Grid item xs={4} sx={{
+
+				}}>
+					{rowSelectionModel && rowSelectionModel.length > 0 ?
+						<UserInfo rowSelectionModel={rowSelectionModel}/>
+						: <Box sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							border: '4px dashed rgba(0,0,0,0.2)',
+							width: '100%',
+							height: '100%',
+							bgcolor: 'rgb(248,248,247)'
 						}}>
+							<BoldH sx={{
+								justifyContent: 'center',
+								alignItems: 'center',
+								color: 'rgba(0,0,0,0.6)',
 
-							{order.orders.find(item => item.id === rowSelectionModel[0])?.items.map(item => (
-								<Grid item xs={2}>
+							}}>
+								Выберите заказ
+							</BoldH>
+						</Box>
+					}
+				</Grid>
 
-									<ProductItem item={item}/>
+			</Grid>
 
-								</Grid>
-							))}
-                        </Grid>
-					</>
-				}
-
-
-			</Box>
-
-			{console.log(changingOrder)}
 
 			<DialogOrder order={changingOrder ? changingOrder : null} open={open} setOpen={setOpen}/>
 
-		</div>
+		</>
 	);
 };
 

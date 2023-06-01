@@ -3,6 +3,7 @@ import {ThemeProvider, CssBaseline, Typography} from "@mui/material";
 import MainPage from "./pages/MainPage/MainPage";
 import user from "./store/user";
 import {useFetchData} from "./hooks/useFetch";
+import {ModalContext} from "./context";
 
 
 export const loader = async () => {
@@ -15,7 +16,10 @@ function App() {
 
 	useEffect(() => {
 
-		user.checkAuth();
+		(async () => {
+			await user.checkAuth();
+		})()
+
 
 		if (user.isAuth) {
 			(async () => {
@@ -24,10 +28,16 @@ function App() {
 
 	}, [])
 
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 	return (
 			<>
-				<CssBaseline/>
-				<MainPage/>
+				<ModalContext.Provider value={{isModalOpen, setIsModalOpen}}>
+					<CssBaseline/>
+					<MainPage/>
+				</ModalContext.Provider>
+
 			</>
 
 	)

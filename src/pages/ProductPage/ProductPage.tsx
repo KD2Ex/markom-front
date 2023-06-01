@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Box, Divider, Grid, Typography} from "@mui/material";
 import {IProduct} from "../../models/IProduct";
 import BoldH from "../../components/styled/BoldH";
@@ -10,6 +10,8 @@ import {getCartCount} from "../../utils/getCartCount";
 import cart from "../../store/cart";
 import measurement from "../../store/measurement";
 import {observer} from "mobx-react-lite";
+import {ModalContext} from "../../context";
+import user from "../../store/user";
 
 interface ProductPageProps {
 	product: IProduct;
@@ -30,13 +32,17 @@ const ProductPage = observer(() => {
 
 	const {product} = useLoaderData() as {product: IProduct}
 	const [cartQuantity, setCartQuantity] = useState(0);
-
+	const {isModalOpen, setIsModalOpen} = useContext(ModalContext)
 
 	const handleClick = async () => {
-		await cart.addCartItem(
-			product
-		)
 
+		if (user.isAuth) {
+			await cart.addCartItem(
+				product
+			)
+		} else {
+			setIsModalOpen(true);
+		}
 	}
 
 	useEffect(() => {
@@ -60,7 +66,7 @@ const ProductPage = observer(() => {
 				</Grid>
 				<Grid item xs={6} sx={{p: 2}}>
 					<BoldH>
-						{product.title}, {product.amount} {product.measurement.name}
+						{product.title}
 					</BoldH>
 					<Divider sx={{width: '100%', pb: 2}}/>
 					<Box sx={{

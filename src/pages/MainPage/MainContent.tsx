@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import MainCarousel from "../../components/MainCarousel/MainCarousel";
 import {Box, Button, Grid, IconButton, Typography} from "@mui/material";
 import ItemsCarousel from "react-multi-carousel";
@@ -20,6 +20,7 @@ import arrowNext from '../../assets/arrowNext.png';
 import arrowPrev from '../../assets/arrowPrev.png';
 import {Link} from "react-router-dom";
 import LoginWarningDialog from "../../components/LoginWarningDialog/LoginWarningDialog";
+import {ModalContext} from "../../context";
 
 const MainContent = () => {
 
@@ -37,7 +38,6 @@ const MainContent = () => {
 	const [newProductsCarRef, setNewProductsCarRef] = useState();
 	const [drinksCarRef, setDrinksCarRef] = useState();
 	const [nutsCarRef, setNutsCarRef] = useState();
-	const [open, setOpen] = useState(false);
 
 
 	const customArrows = (ref) => ( <div>
@@ -73,7 +73,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.group?.name === 'Преформы').map((item) => (
-					<ProductCard product={item} setOpen={setOpen}/>
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
@@ -208,7 +208,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.name === 'ПЭТ бутылки').map((item) => (
-					<ProductCard product={item} setOpen={setOpen}/>
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
@@ -229,7 +229,7 @@ const MainContent = () => {
 						   arrows={false}
 			>
 				{catalog.products.filter(item => item.category.name === 'Колпачки').map((item) => (
-					<ProductCard product={item} setOpen={setOpen}/>
+					<ProductCard product={item}/>
 				))}
 			</ItemsCarousel>
 
@@ -314,7 +314,7 @@ const MainContent = () => {
 			</ItemsCarousel>
 
 
-			<LoginWarningDialog open={open} setOpen={setOpen}/>
+
 
 		</>
 	);

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom/client'
 import App, {loader as mainLoader} from './App'
 import './index.css'
@@ -26,6 +26,7 @@ import {useFetchData} from "./hooks/useFetch";
 import AdminProductPage from "./pages/AdminPage/children/AdminProductPage/AdminProductPage";
 import AdminOrdersPage, {loader as adminOrdersLoader} from "./pages/AdminPage/children/AdminOrderPage/AdminOrdersPage";
 import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
+import { ModalContext } from './context';
 
 
 const router = createBrowserRouter([
@@ -66,6 +67,11 @@ const router = createBrowserRouter([
             },
             {
                 path: 'search/:searchId',
+                element: <SearchPage/>,
+                loader: searchLoader
+            },
+            {
+                path: 'search',
                 element: <SearchPage/>,
                 loader: searchLoader
             },
@@ -129,10 +135,10 @@ const router = createBrowserRouter([
 ])
 
 
-
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
       <ThemeProvider theme={defaultTheme}>
+
           <RouterProvider router={router}/>
           <LoadingIndicator/>
       </ThemeProvider>

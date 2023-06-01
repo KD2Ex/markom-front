@@ -4,6 +4,8 @@ import UserService from "../api/services/UserService";
 class User {
 
 	isAuth = false;
+	isAdmin = false;
+
 
 	constructor() {
 		makeAutoObservable(this)
@@ -11,22 +13,29 @@ class User {
 
 	async login(login: string, password: string,) {
 		const response = await UserService.login(login, password);
+
 		console.log(response)
 		localStorage.setItem('token', response.data.token);
 		this.isAuth = true;
 	}
 
-	checkAuth() {
+	async checkAuth() {
 		const token = localStorage.getItem('token');
 
 		if (localStorage.getItem('token')) {
 			this.isAuth = true
+			await this.getAdmin();
 		}
 	}
 
 	async logout() {
 		localStorage.clear();
 		this.isAuth = false;
+	}
+
+	async getAdmin() {
+		const adminResponse = await UserService.admin();
+		this.isAdmin = !!adminResponse.success;
 	}
 
 }

@@ -15,11 +15,13 @@ const ProductItem: FC<ProductItemProps> = ({item}) => {
 			p: 2,
 		}}>
 			<img src={item.product.image} alt="" style={{
-				width: '100%'
+				width: '100%',
+				height: '290px',
+				objectFit: 'contain'
 			}}/>
-			<BoldH sx={{minHeight: '90px'}}>
+			<Typography variant={'h6'} sx={{minHeight: '110px'}}>
 				{item.product.title}
-			</BoldH>
+			</Typography>
 			<Typography>
 				Цена: {item.product.price}
 			</Typography>

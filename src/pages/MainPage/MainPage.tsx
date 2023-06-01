@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Box, Breadcrumbs, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
 import MainPageBar from "../../components/MainPageBar/MainPageBar";
@@ -14,12 +14,15 @@ import {getUrlName} from "../../utils/getUrlNames";
 import groupCategories from "../../store/groupCategories";
 import category from "../../store/category";
 import catalog from "../../store/catalog";
+import LoginWarningDialog from "../../components/LoginWarningDialog/LoginWarningDialog";
+import {ModalContext} from "../../context";
 
 
 
 const MainPage = () => {
 
 	const params = useLocation()
+	const {isModalOpen, setIsModalOpen} = useContext(ModalContext);
 	console.log(params.pathname)
 
 	const aliases = {
@@ -27,6 +30,9 @@ const MainPage = () => {
 		cart:'Корзина',
 		contacts:'Контакты',
 		about: 'О нас',
+		login: 'Авторизация',
+		reg: 'Регистрация',
+		search: 'Поиск',
 	}
 
 	category.categories.map((item) => {
@@ -51,6 +57,8 @@ const MainPage = () => {
 						{params.pathname.split('/').slice(1).map((item, index, arr) => {
 
 							if (index !== arr.length - 1) {
+
+
 
 								if (arr.includes('catalog') && item !== 'catalog') {
 
@@ -158,6 +166,8 @@ const MainPage = () => {
 				</Grid>
 			</Box>
 
+
+			<LoginWarningDialog open={isModalOpen} setOpen={setIsModalOpen}/>
 
 
 		</Box>

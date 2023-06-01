@@ -10,6 +10,11 @@ import {useFetchData} from "../../hooks/useFetch";
 
 
 export const loader = async ({params}) => {
+
+	if (!params.searchId) {
+		const products = []
+		return {products}
+	}
 	const searchQuery = params.searchId.toLowerCase();
 	console.log(searchQuery)
 	await useFetchData()

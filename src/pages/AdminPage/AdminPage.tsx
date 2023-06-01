@@ -2,29 +2,11 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
 	Box,
 	Button,
-	Container,
-	Dialog, DialogActions,
-	DialogContent,
-	DialogTitle,
-	MenuItem,
-	Select, Tabs, Tab,
-	TextField,
-	Typography
 } from "@mui/material";
-import {DataGrid, GridActionsCellItem, GridRowId, GridRowParams} from '@mui/x-data-grid';
-import catalog from "../../store/catalog";
-import ProductService from "../../api/services/ProductService";
 import { observer } from 'mobx-react-lite';
-import measurement from "../../store/measurement";
-import category from "../../store/category";
-import {IProduct} from "../../models/IProduct";
-import {ICategory} from "../../models/ICategory";
 import {useFetchData} from "../../hooks/useFetch";
-import {IMeasurement} from "../../models/IMeasurement";
-import SaveIcon from '@mui/icons-material/Save';
-import ClearIcon from '@mui/icons-material/Clear';
-import DialogProduct from "./components/DialogProduct";
-import {Link, Outlet, useLocation} from 'react-router-dom'
+import {Link, Navigate, Outlet, useLocation} from 'react-router-dom'
+import user from "../../store/user";
 
 export const loader = async () => {
 	await useFetchData()
@@ -40,6 +22,11 @@ const AdminPage = observer(() => {
 	}, [])
 
 	const location = useLocation();
+
+
+/*	if (!user.isAdmin) {
+		return <Navigate to={'/'}/>
+	}*/
 
 	return (
 		<div>

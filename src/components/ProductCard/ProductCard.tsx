@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {Box, Button, ButtonGroup, Typography} from "@mui/material";
 import {CartButton} from "../styled/CartButton";
 import cart from '../../store/cart'
@@ -11,16 +11,16 @@ import measurement from "../../store/measurement";
 import {getCartCount} from "../../utils/getCartCount";
 import cartLogo from '../../assets/cartLogo.png'
 import user from "../../store/user";
+import {ModalContext} from "../../context";
 
 interface ProductCarouselItemProps {
 	product: IProduct,
-	setOpen: React.Dispatch<boolean>
 }
 
-const ProductCard: FC<ProductCarouselItemProps> = observer( ({product, setOpen}) => {
+const ProductCard: FC<ProductCarouselItemProps> = observer( ({product}) => {
 
 	const [cartQuantity, setCartQuantity] = useState(0);
-
+	const {isModalOpen, setIsModalOpen} = useContext(ModalContext)
 	const handleClick = async () => {
 
 		if (user.isAuth) {
@@ -28,7 +28,7 @@ const ProductCard: FC<ProductCarouselItemProps> = observer( ({product, setOpen})
 				product
 			)
 		} else {
-			setOpen(true);
+			setIsModalOpen(true);
 		}
 	}
 
@@ -65,7 +65,7 @@ const ProductCard: FC<ProductCarouselItemProps> = observer( ({product, setOpen})
 			</Link>
 			<Box  sx={{minHeight: '70px'}}>
 				<Typography component={Link} to={`/catalog/${product.category.name}/${product.id}`}>
-					{`${product.title}, ${product.amount} ${product.measurement.name}`}
+					{`${product.title}`}
 				</Typography>
 			</Box>
 

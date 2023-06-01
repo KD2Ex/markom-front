@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Grid} from "@mui/material";
 import {Link, useNavigate, Outlet} from "react-router-dom";
 import user from '../../store/user';
 import {observer} from "mobx-react-lite";
+import UserService from "../../api/services/UserService";
 
 const ProfilePage = observer(() => {
 
@@ -16,6 +17,7 @@ const ProfilePage = observer(() => {
 		user.logout();
 	}
 
+
 	return (
 		<Grid container>
 			<Grid item xs={1.5} sx={{
@@ -28,9 +30,8 @@ const ProfilePage = observer(() => {
 				}
 			}}>
 				<Link to={'/profile/orders'}>История заказов</Link>
-				<Link to={'/profile/adress'}>Адресс доставки</Link>
 				<Link to={'/profile/data'}>Контактные данные</Link>
-				<Link to={'/admin'}>Админ панель</Link>
+				{user.isAdmin && <Link to={'/admin'}>Админ панель</Link>}
 				<Link to={'/login'} onClick={handleLogout}>Выход</Link>
 			</Grid>
 			<Grid item xs>

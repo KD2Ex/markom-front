@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from "../LoginPage/LoginPage.module.css";
 import BoldH from "../../components/styled/BoldH";
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import {Alert, Box, Button, Snackbar, Typography, useTheme} from "@mui/material";
 import {ProfileTextField} from "../../components/styled/ProfileTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
 import {Link, useNavigate} from "react-router-dom";
@@ -19,6 +19,12 @@ const RegPage = () => {
 	const [password, setPassword] = useState('')
 	const [repeatPassword, setRepeatPassword] = useState('')
 	const [address, setAddress] = useState('')
+	const [alertOpen, setAlertOpen] = useState(false);
+	const [alert, setAlert] = useState({type: 'error', message: 'Ошибка'});
+
+	const handleClose = () => {
+		setAlertOpen(false);
+	}
 
 	const handleUserChange = (e) => {
 		setUser(e.target.value);
@@ -46,10 +52,22 @@ const RegPage = () => {
 
 	const handleReg = async () => {
 
-		const [lastName, firstName, patronymic] = user.split(' ')
-		console.log(lastName, firstName, patronymic, phone, email, password)
-		console.log(await UserService.reg(lastName, firstName, patronymic, email, password, phone))
-		navigate('/profile');
+		//const [lastName, firstName, patronymic] = user.split(' ')
+		//console.log(lastName, firstName, patronymic, phone, email, password)
+		if (user && email && password && phone && address ) {
+
+			if (password !== repeatPassword) {
+				setAlert({type: 'error', message: 'Пароли не совпадают!'})
+				setAlertOpen(true)
+				return;
+			}
+
+			console.log(await UserService.reg(user, email, password, phone, address))
+			navigate('/profile');
+		} else {
+			setAlert({type: 'error', message: 'Все поля должны быть заполнены!'})
+			setAlertOpen(true)
+		}
 	}
 
 	return (
@@ -110,6 +128,7 @@ const RegPage = () => {
 					</Typography>
 					<ProfileTextField
 						value={password}
+						type={'password'}
 						onChange={handlePasswordChange}
 						sx={{width: '100%'}}
 					/>
@@ -120,6 +139,7 @@ const RegPage = () => {
 					</Typography>
 					<ProfileTextField
 						value={repeatPassword}
+						type={'password'}
 						onChange={handleRepeatPasswordChange}
 						sx={{width: '100%'}}
 					/>
@@ -145,6 +165,17 @@ const RegPage = () => {
 				</Button>
 
 			</Box>
+
+			<Snackbar
+				open={alertOpen}
+				autoHideDuration={3000}
+				onClose={handleClose}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+			>
+				<Alert variant={"filled"} onClose={handleClose} severity={alert.type} sx={{width: '100%'}}>
+					{alert.message}
+				</Alert>
+			</Snackbar>
 
 		</Box>
 	);

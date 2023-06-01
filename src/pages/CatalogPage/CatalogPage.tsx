@@ -6,7 +6,6 @@ import {
 	Grid, Input,
 	InputLabel,
 	List,
-	ListItemButton,
 	MenuItem,
 	Select,
 	SelectChangeEvent, Slider, TextField,
@@ -15,12 +14,8 @@ import {
 import BoldH from "../../components/styled/BoldH";
 import FilterItem from "./components/FIlterItem/FilterItem";
 import {DefaultButton} from "../../components/styled/DefaultButton";
-import Category from "./components/Category/Category";
-import catalog from "../../store/catalog";
 import category from "../../store/category";
 import groupCategories from "../../store/groupCategories";
-import {ICategory} from "../../models/ICategory";
-import {useFetchData} from "../../hooks/useFetch";
 import CategoryList from "./components/CategoryList/CategoryList";
 
 export const loader = async () => {
@@ -34,7 +29,7 @@ const CatalogPage = () => {
 
 
 	const [sortType, setSortType] = useState('');
-	const [price, setPrice] = useState([0, 2000])
+	const [price, setPrice] = useState([0, 100000])
 
 	const [items, setItems] = useState([])
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -93,7 +88,7 @@ const CatalogPage = () => {
 					{title}
 				</BoldH>
 				<FormControl>
-					<InputLabel>Сортировка</InputLabel>
+					<InputLabel size={'small'}>Сортировка</InputLabel>
 					<Select
 						size={'small'}
 						value={sortType}
@@ -145,7 +140,7 @@ const CatalogPage = () => {
 								onChange={handleCostSliderChange}
 								aria-label="Small"
 								valueLabelDisplay="auto"
-								max={2000}
+								max={100000}
 								min={0}
 								step={10}
 							/>

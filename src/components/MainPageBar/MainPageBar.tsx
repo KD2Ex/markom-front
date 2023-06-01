@@ -4,7 +4,6 @@ import logo from '../../assets/unnamed.png';
 import {DefaultButton} from "../styled/DefaultButton";
 import {SearchTextField} from "../styled/SearchTextField";
 import styles from '../MainPageBar/MainPageBar.module.css'
-import banana from '../../assets/banana.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {Link, useNavigate} from "react-router-dom";
@@ -18,7 +17,13 @@ import groupCategories from "../../store/groupCategories";
 import catalog from "../../store/catalog";
 import user from "../../store/user";
 import LoginWarningDialog from "../LoginWarningDialog/LoginWarningDialog";
-
+import cat1 from '../../assets/categories/Преформы.png'
+import cat2 from '../../assets/categories/Колпачки для асептической упаковки.jpg'
+import cat3 from '../../assets/categories/ПЭТ гранулят.png'
+import cat4 from '../../assets/categories/ПЭТ бутылки.png'
+import cat5 from '../../assets/categories/Брендирование полимерных колпачков.png'
+import cat6 from '../../assets/categories/Колпачки.png'
+import cat7 from '../../assets/categories/ПЭТ кеги.png'
 
 const MainPageBar = observer(() => {
 
@@ -52,6 +57,19 @@ const MainPageBar = observer(() => {
 	const id = open ? 'simple-popper' : undefined;
 
 	const anchor = useRef(null);
+
+	const groupImages = [
+		cat1
+	]
+
+	const categoryImages = [
+		cat2,
+		cat3,
+		cat4,
+		cat5,
+		cat6,
+		cat7,
+	]
 
 
 	useEffect(() => {
@@ -97,16 +115,13 @@ const MainPageBar = observer(() => {
 
 			</DefaultButton>
 
+
 				<Popper id={id} open={open} anchorEl={anchor.current} placement={'bottom'}  >
-					<Box sx={{ }} className={styles.popper}>
-						{groupCategories.groupCategories.map(group => (
+					<Box className={styles.popper}>
+						{groupCategories.groupCategories.map((group, index) => (
 							<Box className={styles.catalogItem} onClick={handleClose}>
 								<Link to={`/catalog/${group.id}`} style={{width: '100%',}}>
-									<img style={{width: '100%', maxHeight: '250px'}} src={
-										catalog.products.filter(product => product.category.group?.id === group.id)?.find(item =>
-											item?.image
-										)?.image
-									} alt=""/>
+									<img style={{width: '100%', maxHeight: '250px'}} src={groupImages[index]} alt=""/>
 
 								</Link>
 								<Typography component={Link} to={`/catalog/${group.id}`}  sx={{
@@ -124,7 +139,9 @@ const MainPageBar = observer(() => {
 						{category.categories.filter(item => item.group === null).map((item, index) => (
 							<Box className={styles.catalogItem} onClick={handleClose}>
 								<Link to={`/catalog/0_${item.id}`} style={{width: '100%',}}>
-									<img style={{width: '100%',  maxHeight: '250px'}} src={catalog.products.find(product => product.category.id === item.id)?.image} alt=""/>
+									<img style={{width: '100%',  maxHeight: '250px'}} src={
+										categoryImages[index]
+									} alt=""/>
 
 								</Link>
 								<Typography component={Link} to={`/catalog/0_${item.id}`} sx={{

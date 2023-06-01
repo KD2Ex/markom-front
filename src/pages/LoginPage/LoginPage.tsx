@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Typography, useTheme} from "@mui/material";
+import {Alert, Box, Button, Snackbar, Typography, useTheme} from "@mui/material";
 import styles from './LoginPage.module.css'
 import BoldH from "../../components/styled/BoldH";
 import {SearchTextField} from "../../components/styled/SearchTextField";
@@ -16,7 +16,8 @@ const LoginPage = observer(() => {
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
-
+	const [alertOpen, setAlertOpen] = useState(false);
+	const [alert, setAlert] = useState({type: 'error', message: 'Ошибка'});
 	const theme = useTheme();
 	const navigate = useNavigate();
 
@@ -29,7 +30,27 @@ const LoginPage = observer(() => {
 	}
 
 	const handleLogin = async () => {
-		await user.login(username, password)
+		if (username && password) {
+			await user.login(username, password)
+				.catch((reason) => {
+					if (reason.response.data.code === 0) {
+						setAlert({type: 'error', message: 'Данные не найдены'})
+						setAlertOpen(true)
+						return;
+					}
+				})
+			await user.getAdmin();
+			setAlert({type: 'success', message: 'Вы успешно авторизованы.'})
+			setAlertOpen(true)
+		} else {
+			setAlert({type: 'error', message: 'Все поля должны быть заполнены!'})
+			setAlertOpen(true)
+		}
+
+	}
+
+	const handleClose = () => {
+		setAlertOpen(false);
 	}
 
 	useEffect(() => {
@@ -83,6 +104,18 @@ const LoginPage = observer(() => {
 					Зарегистрироваться
 				</Button>
 			</Box>
+
+
+			<Snackbar
+				open={alertOpen}
+				autoHideDuration={3000}
+				onClose={handleClose}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+			>
+				<Alert variant={"filled"} onClose={handleClose} severity={alert.type} sx={{width: '100%'}}>
+					{alert.message}
+				</Alert>
+			</Snackbar>
 
 		</Box>
 	);
