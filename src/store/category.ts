@@ -54,6 +54,7 @@ class Category {
 
 
 	async fetchCategories() {
+
 		this.categories = await CategoryService.fetchCategories();
 	}
 

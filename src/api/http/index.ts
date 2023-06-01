@@ -3,7 +3,8 @@ import axios from "axios";
 export const API_URL = 'http://91.223.199.62:8097/api'
 
 const $api = axios.create({
-	baseURL: API_URL
+	baseURL: API_URL,
+	timeout: 5000
 })
 
 $api.interceptors.request.use((config) => {

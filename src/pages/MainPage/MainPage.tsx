@@ -1,52 +1,42 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Breadcrumbs, Button, Grid, IconButton, Typography} from "@mui/material";
 import NavBar from "../../components/NavBar/NavBar";
-import styles from './MainPage.module.css';
 import MainPageBar from "../../components/MainPageBar/MainPageBar";
-import {Carousel} from "react-responsive-carousel";
-import carousel1 from '../../assets/carousel1.jpg'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import MainCarousel from "../../components/MainCarousel/MainCarousel";
-import ItemsCarousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import fruit from '../../assets/banana.png';
-import img1 from '../../assets/mainPage/img1.svg'
-import img2 from '../../assets/mainPage/img2.svg'
-import img3 from '../../assets/mainPage/img3.svg'
-import deserts from '../../assets/mainPage/deserts.jpg'
-import fish from '../../assets/mainPage/fish.jpg'
-import meat from '../../assets/mainPage/meat.jpg'
-import banner3 from '../../assets/mainPage/banner3.jpg'
-import banner4 from '../../assets/mainPage/banner4.jpg'
-import info from '../../assets/mainPage/info_2.jpg'
-import brandLogo from '../../assets/mainPage/Component.jpg'
 import YouTubeIcon from '@mui/icons-material/YouTube'
-import ProductCard from "../../components/ProductCard/ProductCard";
-import {DefaultButton} from "../../components/styled/DefaultButton";
 import visa from '../../assets/mainPage/Visa.svg'
 import masterCard from '../../assets/mainPage/masterCard.svg'
 import mir from '../../assets/mainPage/mir.svg'
 import markomLogoBlack from '../../assets/unnamed.png'
-import SearchIcon from '@mui/icons-material/Search';
-import MainContent from "./MainContent";
 import {Link, Outlet, useLocation} from 'react-router-dom'
-import ProductService from "../../api/services/ProductService";
-import catalog from "../../store/catalog";
-import {useFetchData} from "../../hooks/useFetch";
 import {getUrlName} from "../../utils/getUrlNames";
-import LoginWarningDialog from "../../components/LoginWarningDialog/LoginWarningDialog";
+import groupCategories from "../../store/groupCategories";
+import category from "../../store/category";
+import catalog from "../../store/catalog";
 
 
 
 const MainPage = () => {
 
 	const params = useLocation()
-
+	console.log(params.pathname)
 
 	const aliases = {
 		catalog: 'Каталог',
-		cart: 'Корзина'
+		cart:'Корзина',
+		contacts:'Контакты',
+		about: 'О нас',
 	}
+
+	category.categories.map((item) => {
+		aliases[item.name] = item.name
+		aliases[item.id] = item.name
+	})
+
+	catalog.products.map((item) => {
+		aliases[item.title] = item.title
+	})
 
 	return (
 		<Box>
@@ -59,10 +49,20 @@ const MainPage = () => {
 					<Breadcrumbs>
 						<Link style={{textDecoration: 'none'}} to={`/`}>Главная</Link>
 						{params.pathname.split('/').slice(1).map((item, index, arr) => {
+
 							if (index !== arr.length - 1) {
+
+								if (arr.includes('catalog') && item !== 'catalog') {
+
+									return <Link key={index} to={`/catalog/0_${item}`}>{aliases[item]}</Link>
+								}
+
 								return <Link key={index} to={`/${item}`}>{aliases[item]}</Link>
 							}
-							return <Typography key={index}>{getUrlName(item)}</Typography>
+							if (arr.includes('catalog')) {
+								return <Typography key={index}>{getUrlName(item)}</Typography>
+							}
+							return <Typography key={index}>{aliases[item]}</Typography>
 						})}
 					</Breadcrumbs>
 				}

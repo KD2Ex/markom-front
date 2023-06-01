@@ -4,8 +4,7 @@ import BoldH from "../../components/styled/BoldH";
 import {Box, Button, Typography, useTheme} from "@mui/material";
 import {ProfileTextField} from "../../components/styled/ProfileTextField";
 import {DefaultButton} from "../../components/styled/DefaultButton";
-import {useNavigate} from "react-router-dom";
-import user from "../../store/user";
+import {Link, useNavigate} from "react-router-dom";
 import UserService from "../../api/services/UserService";
 
 const RegPage = () => {
@@ -19,6 +18,7 @@ const RegPage = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [repeatPassword, setRepeatPassword] = useState('')
+	const [address, setAddress] = useState('')
 
 	const handleUserChange = (e) => {
 		setUser(e.target.value);
@@ -38,6 +38,10 @@ const RegPage = () => {
 
 	const handleRepeatPasswordChange = (e) => {
 		setRepeatPassword(e.target.value);
+	}
+
+	const handleAddressChange = (e) => {
+		setAddress(e.target.value);
 	}
 
 	const handleReg = async () => {
@@ -88,6 +92,18 @@ const RegPage = () => {
 						sx={{width: '100%'}}
 					/>
 				</Box>
+
+				<Box>
+					<Typography>
+						Адрес доставки
+					</Typography>
+					<ProfileTextField
+						value={address}
+						onChange={handleAddressChange}
+						sx={{width: '100%'}}
+					/>
+				</Box>
+
 				<Box>
 					<Typography>
 						Пароль
@@ -121,7 +137,10 @@ const RegPage = () => {
 					textDecoration: 'underline',
 					textTransform: 'none',
 					fontSize: 16
-				}}>
+				}}
+						component={Link}
+						to={'/login'}
+				>
 					У меня уже есть аккаунт
 				</Button>
 

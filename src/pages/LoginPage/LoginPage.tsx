@@ -70,14 +70,7 @@ const LoginPage = observer(() => {
 				<DefaultButton sx={{fontSize: 16, px: 2, height: '40px', fontWeight: 400}} onClick={handleLogin}>
 					Войти
 				</DefaultButton>
-				<Button sx={{
-					color:theme.palette.primary.secondary,
-					textDecoration: 'underline',
-					textTransform: 'none',
-					fontSize: 16
-				}}>
-					Восстановить пароль
-				</Button>
+
 				<Button sx={{
 					color:theme.palette.primary.secondary,
 					textDecoration: 'underline',

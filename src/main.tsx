@@ -25,6 +25,7 @@ import RegPage from "./pages/RegPage/RegPage";
 import {useFetchData} from "./hooks/useFetch";
 import AdminProductPage from "./pages/AdminPage/children/AdminProductPage/AdminProductPage";
 import AdminOrdersPage, {loader as adminOrdersLoader} from "./pages/AdminPage/children/AdminOrderPage/AdminOrdersPage";
+import LoadingIndicator from "./components/LoadingIndicator/LoadingIndicator";
 
 
 const router = createBrowserRouter([
@@ -133,6 +134,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
       <ThemeProvider theme={defaultTheme}>
           <RouterProvider router={router}/>
+          <LoadingIndicator/>
       </ThemeProvider>
   </React.StrictMode>,
 )
