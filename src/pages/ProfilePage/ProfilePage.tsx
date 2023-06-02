@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Grid} from "@mui/material";
-import {Link, useNavigate, Outlet} from "react-router-dom";
+import {Link, useNavigate, Outlet, Navigate} from "react-router-dom";
 import user from '../../store/user';
 import {observer} from "mobx-react-lite";
 import UserService from "../../api/services/UserService";
@@ -10,7 +10,8 @@ const ProfilePage = observer(() => {
 	const navigate = useNavigate();
 
 	if (!user.isAuth) {
-		navigate('/login')
+		//navigate('/login')
+		return <Navigate to={'/login'}/>
 	}
 
 	const handleLogout = () => {

@@ -21,17 +21,20 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 	}
 
 	return (
-		<Grid container item spacing={2} sx={{maxHeight: '210px'}}>
+		<Grid container item spacing={2} sx={{height: '280px'}}>
 
 			<Grid item xs={2}>
 				<img
 					src={cartItem.image}
 					alt=""
-					style={{width: '100%', height: '100%'}}
+					style={{width: '100%', height: '100%', objectFit: 'cover'}}
 				/>
 			</Grid>
 
-			<Grid sx={{justifyContent: 'space-between', display: 'flex', flexDirection: 'column'}} item xs={9}>
+			<Grid sx={{
+				justifyContent: 'space-between',
+				display: 'flex',
+				flexDirection: 'column'}} item xs={9}>
 				<Box>
 
 					<BoldH>
@@ -41,8 +44,9 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 				</Box>
 
 				<Typography>
-					{cartItem.price}  ₽
+					{Math.floor(cartItem.price * ((100 - cartItem?.discount) / 100))}  ₽
 				</Typography>
+
 
 				<Box sx={{width: '15%'}}>
 					<CartGroupButtons product={cartItem} height={'28px'} content={count}/>
@@ -56,7 +60,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 				</IconButton>
 
 				<Typography fontSize={24} fontWeight={400}>
-					{cartItem.price * count} ₽
+					{Math.floor(cartItem.price * ((100 - cartItem?.discount) / 100))}  ₽
 				</Typography>
 
 

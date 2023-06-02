@@ -65,11 +65,11 @@ const CartPage = observer(() => {
 
 			<Grid container spacing={3}
 				sx={{
-					display: 'flex',
+					//display: 'flex',
 				}}
 			>
 
-				<Grid container spacing={2} item xs={9}>
+				<Grid container spacing={8} item xs={9}>
 					{cartItems.length == 0
 						?  <Typography
 							sx={{

@@ -18,10 +18,12 @@ class Cart {
 		this.updatePrice();
 	}
 
-	updatePrice() {
-		this.totalPrice = this.cartItems.items.reduce((prev, next) => (
+	async updatePrice() {
+		/*this.totalPrice = this.cartItems.items.reduce((prev, next) => (
 			prev += next.product.price * next.count
-		), 0)
+		), 0)*/
+		const response = await CartService.getCart();
+		this.totalPrice = response.totalPrice
 	}
 
 	async addCartItem(cartItem: IProduct) {
