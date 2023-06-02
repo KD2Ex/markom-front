@@ -24,9 +24,9 @@ const AdminPage = observer(() => {
 	const location = useLocation();
 
 
-/*	if (!user.isAdmin) {
+	if (!user.isAdmin) {
 		return <Navigate to={'/'}/>
-	}*/
+	}
 
 	return (
 		<div>
