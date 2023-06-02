@@ -21,7 +21,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 	}
 
 	return (
-		<Grid container item spacing={2} sx={{height: '280px'}}>
+		<Grid container item spacing={2} sx={{height: '300px'}}>
 
 			<Grid item xs={2}>
 				<img

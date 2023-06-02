@@ -14,8 +14,8 @@ const ProfilePage = observer(() => {
 		return <Navigate to={'/login'}/>
 	}
 
-	const handleLogout = () => {
-		user.logout();
+	const handleLogout = async () => {
+		await user.logout();
 	}
 
 
@@ -33,7 +33,7 @@ const ProfilePage = observer(() => {
 				<Link to={'/profile/orders'}>История заказов</Link>
 				<Link to={'/profile/data'}>Контактные данные</Link>
 				{user.isAdmin && <Link to={'/admin'}>Админ панель</Link>}
-				<Link to={'/login'} onClick={handleLogout}>Выход</Link>
+				<Link to={'/'} onClick={handleLogout}>Выход</Link>
 			</Grid>
 			<Grid item xs>
 				<Outlet/>

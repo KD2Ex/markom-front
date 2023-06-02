@@ -209,7 +209,7 @@ const CartPage = observer(() => {
 
 
 
-			<BoldH sx={{my: 2}}>
+			<BoldH sx={{my: 2, mt:6}}>
 				Хлеб, сдоба, выпечка
 			</BoldH>
 

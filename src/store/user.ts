@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import UserService from "../api/services/UserService";
+import cart from "./cart";
 
 class User {
 
@@ -31,6 +32,8 @@ class User {
 	async logout() {
 		localStorage.clear();
 		this.isAuth = false;
+		cart.cartItems = {items: [], totalPrice: 0}
+		cart.totalPrice = 0
 	}
 
 	async getAdmin() {
