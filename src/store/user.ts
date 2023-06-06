@@ -18,6 +18,7 @@ class User {
 		console.log(response)
 		localStorage.setItem('token', response.data.token);
 		this.isAuth = true;
+		await cart.fetchCart();
 	}
 
 	async checkAuth() {

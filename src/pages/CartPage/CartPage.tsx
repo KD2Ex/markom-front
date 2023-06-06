@@ -1,5 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {Box, Button, Grid, Modal, OutlinedInput, Typography, useTheme} from "@mui/material";
+import React, {useContext, useEffect, useState} from 'react';
+import {
+	Box,
+	Button,
+	FormControlLabel,
+	Grid,
+	Modal,
+	OutlinedInput, Radio,
+	RadioGroup, TextField,
+	Typography,
+	useTheme
+} from "@mui/material";
 import BoldH from "../../components/styled/BoldH";
 import ItemsCarousel from "react-multi-carousel";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -12,6 +22,8 @@ import {DefaultButton} from "../../components/styled/DefaultButton";
 import catalog from "../../store/catalog";
 import {Link} from "react-router-dom";
 import order from "../../store/order";
+import OrderModal from "./components/OrderModal";
+import {AlertContext} from "../../context";
 
 export const loader = async () => {
 	const cartItem = await cart.fetchCart();
@@ -22,13 +34,23 @@ export const loader = async () => {
 const CartPage = observer(() => {
 
 	const [open, setOpen] = useState(false);
-
+	const {setAlertOpen, setAlertMessage, setAlertType} = useContext(AlertContext)
 	const theme = useTheme();
 
 	const handleCreateOrder = async () => {
 		await order.createOrder()
 		await cart.fetchCart();
 		setOpen(true)
+	}
+
+	const handleOpenOrder = () => {
+		if (cart.cartItems.items.length !== 0) {
+			setOpen(true)
+		} else {
+			setAlertOpen(true)
+			setAlertMessage('Корзина пуста!')
+			setAlertType('error')
+		}
 	}
 
 	const responsive = {
@@ -178,29 +200,14 @@ const CartPage = observer(() => {
 
 
 
-						<DefaultButton onClick={handleCreateOrder}>
+						<DefaultButton onClick={handleOpenOrder}>
 							Оформить заказ
 						</DefaultButton>
 
-						<Modal
+						<OrderModal
 							open={open}
-							onClose={() => setOpen(false)}
-						>
-							<Box sx={{
-								position: 'absolute' as 'absolute',
-								top: '50%',
-								left: '50%',
-								transform: 'translate(-50%, -50%)',
-								width: 400,
-								bgcolor: 'background.paper',
-								boxShadow: 8,
-								p: 4,
-								borderRadius: 2
-							}}>
-								Заказ успешно оформлен!
-
-							</Box>
-						</Modal>
+							setOpen={setOpen}
+						/>
 
 					</Box>
 

@@ -44,6 +44,7 @@ const AdminOrdersPage = () => {
 			cost: item.cost,
 			orderDate: new Date(item.orderDate.slice(0, -1)).toLocaleString() ,
 			status: item.status.id,
+			cash: item.cash
 		}
 	}), [JSON.stringify(order.orders)]);
 
@@ -51,6 +52,11 @@ const AdminOrdersPage = () => {
 		{field: 'id', headerName: 'Id'},
 		{field: 'cost', headerName: 'Стоимость'},
 		{field: 'orderDate', headerName: 'Дата', flex: 2},
+		{field: 'cash', headerName: ' Способ оплаты', flex: 1,
+			renderCell: (params) => (
+				<p>{params.value ? 'Наличные' : 'Банковской картой'}</p>
+			)
+		},
 		{
 			field: 'status',
 			headerName: 'Статус',

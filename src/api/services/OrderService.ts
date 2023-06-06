@@ -9,8 +9,11 @@ export default class OrderService {
 		return response.data
 	}
 
-	static async createOrder() {
-		return $api.post('/orders/create');
+	static async createOrder(cash: boolean, information: string) {
+		return $api.post('/orders/create', {
+			cash,
+			information
+		});
 	}
 
 	static async changeStatus(id: number, status: StatusType) {

@@ -60,7 +60,7 @@ const CartItem: FC<CardItemProps> = observer( ({cartItem, count}) => {
 				</IconButton>
 
 				<Typography fontSize={24} fontWeight={400}>
-					{Math.floor(cartItem.price * ((100 - cartItem?.discount) / 100))}  ₽
+					{Math.floor(cartItem.price  * count * ((100 - cartItem?.discount) / 100)) }  ₽
 				</Typography>
 
 

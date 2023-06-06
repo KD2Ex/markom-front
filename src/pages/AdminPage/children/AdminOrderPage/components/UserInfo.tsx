@@ -28,6 +28,9 @@ const UserInfo = ({rowSelectionModel}) => {
                 <Typography>
                     Email: {userOrder.user.login}
                 </Typography>
+                <Typography>
+                    Комментарий к заказу: {userOrder.information ? userOrder.information : 'Отсутствует' }
+                </Typography>
             </Box>
 
             <Typography variant={'h5'} fontWeight={'bold'}>
